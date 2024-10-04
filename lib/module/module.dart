@@ -1,0 +1,5 @@
+class Module {
+  void initDependencies(){
+
+  }
+}
