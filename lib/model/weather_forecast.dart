@@ -1,0 +1,25 @@
+class WeatherForecast {
+  final String date;
+  final double temperature;
+  final double humidity;
+  final double wind;
+  final double pressure;
+  final double cloudiness;
+  final WeatherCondition weatherCondition;
+
+  WeatherForecast(
+      {required this.date,
+      required this.temperature,
+      required this.humidity,
+      required this.wind,
+      required this.pressure,
+      required this.cloudiness,
+      required this.weatherCondition});
+
+  @override
+  String toString() {
+    return 'WeatherForecast{date: $date, temperature: $temperature, humidity: $humidity, wind: $wind, pressure: $pressure, cloudiness: $cloudiness, weatherCondition: $weatherCondition}';
+  }
+}
+
+enum WeatherCondition { sun, cloud, rain, partiallyCloudy, snow }
