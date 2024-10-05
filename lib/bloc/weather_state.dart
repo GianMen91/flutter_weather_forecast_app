@@ -13,7 +13,7 @@ class WeatherState extends Equatable {
       this.permissionState = PermissionState.declined});
 
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [weatherForecast, isLoading, permissionState];
 
   WeatherState copyWith({
     List<WeatherForecast>? weatherForecast,
