@@ -6,22 +6,32 @@ import 'package:flutter_weather_forecast_app/bloc/weather_state.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
-  WeatherBloc() : super(const WeatherState()){
-
-  on<CheckLocationPermissionEvent>(_checkLocationPermissionEvent);
+  WeatherBloc() : super(const WeatherState()) {
+    on<CheckLocationPermissionEvent>(_checkLocationPermissionEvent);
+    on<AskForLocationPermissionEvent>(_askForLocationPermissionEvent);
   }
 
-
-FutureOr<void> _checkLocationPermissionEvent(
+  FutureOr<void> _checkLocationPermissionEvent(
     CheckLocationPermissionEvent event,
     Emitter<WeatherState> emit,
-    ) async {
-        var  status = await Permission.location.status;
+  ) async {
+    var status = await Permission.location.status;
 
-        if(status.isGranted){
-
-        }else {
-            emit(state.copyWith(permissionState: PermissionState.declined));
-        }
+    if (status.isGranted) {
+    } else {
+      emit(state.copyWith(permissionState: PermissionState.declined));
     }
+  }
+
+  FutureOr<void> _askForLocationPermissionEvent(
+    AskForLocationPermissionEvent event,
+    Emitter<WeatherState> emit,
+  ) async {
+    var status = await Permission.location.request();
+
+    if (status.isGranted) {
+    } else {
+      emit(state.copyWith(permissionState: PermissionState.declined));
+    }
+  }
 }
