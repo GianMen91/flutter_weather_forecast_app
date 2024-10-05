@@ -15,12 +15,29 @@ class WeatherAppMainScreen extends StatelessWidget {
     return BlocBuilder<WeatherBloc, WeatherState>(
         builder: (context, state) {
           return Scaffold(
-            body: PermissionWidget(bloc: bloc),
+            body: _getWidgetDependingByPermission(state, bloc),
           );
         }
     );
   }
+
+  Widget _getWidgetDependingByPermission(WeatherState state, WeatherBloc bloc){
+    if(state.permissionState == PermissionState.granted){
+      return const WeatherWidget();
+    }
+    return PermissionWidget(bloc: bloc);
+  }
 }
+
+class WeatherWidget extends StatelessWidget {
+  const WeatherWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
 
 
 
