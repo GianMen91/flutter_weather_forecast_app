@@ -18,6 +18,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     var status = await Permission.location.status;
 
     if (status.isGranted) {
+      emit(state.copyWith(permissionState: PermissionState.granted));
     } else {
       emit(state.copyWith(permissionState: PermissionState.declined));
     }
@@ -30,6 +31,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     var status = await Permission.location.request();
 
     if (status.isGranted) {
+      emit(state.copyWith(permissionState: PermissionState.granted));
     } else {
       emit(state.copyWith(permissionState: PermissionState.declined));
     }
