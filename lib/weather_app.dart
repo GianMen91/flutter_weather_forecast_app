@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_forecast_app/bloc/weather_bloc.dart';
+import 'package:flutter_weather_forecast_app/bloc/weather_event.dart';
 import 'package:flutter_weather_forecast_app/presentation/weather_app_main_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,7 +18,7 @@ class WeatherApp extends StatelessWidget {
       GoRoute(
           path: '/',
           builder: (context, state) => BlocProvider(
-                create: (context) => WeatherBloc(),
+                create: (context) => WeatherBloc()..add(CheckLocationPermissionEvent()),
                 child: const WeatherAppMainScreen(),
               ))
     ]);
