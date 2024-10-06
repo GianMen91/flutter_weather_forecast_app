@@ -30,6 +30,8 @@ class OpenWeatherApiCall {
             WeatherForecast forecast = WeatherForecast(
                 date: date,
                 temperature: (item['main']['temp'] as num).toDouble(),
+                temp_min: (item['main']['temp_min'] as num).toDouble(),
+                temp_max: (item['main']['temp_max'] as num).toDouble(),
                 humidity: (item['main']['humidity'] as num).toDouble(),
                 wind: (item['wind']['speed'] as num).toDouble(),
                 pressure: (item['main']['pressure'] as num).toDouble(),
@@ -47,6 +49,12 @@ class OpenWeatherApiCall {
           groupedForecasts.forEach((date, forecasts) {
             double avgTemp =
                 forecasts.map((f) => f.temperature).reduce((a, b) => a + b) /
+                    forecasts.length;
+            double avgTempMin =
+                forecasts.map((f) => f.temp_min).reduce((a, b) => a + b) /
+                    forecasts.length;
+            double avgTempMax =
+                forecasts.map((f) => f.temp_max).reduce((a, b) => a + b) /
                     forecasts.length;
             double avgHumidity =
                 forecasts.map((f) => f.humidity).reduce((a, b) => a + b) /
@@ -66,6 +74,8 @@ class OpenWeatherApiCall {
             averagedForecasts.add(WeatherForecast(
               date: date,
               temperature: avgTemp,
+              temp_min: avgTempMin,
+              temp_max: avgTempMax,
               humidity: avgHumidity,
               wind: avgWind,
               pressure: avgPressure,
