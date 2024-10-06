@@ -5,12 +5,10 @@ import 'package:flutter_weather_forecast_app/model/weather_forecast.dart';
 import 'package:http/http.dart' as http;
 
 class OpenWeatherApiCall {
-
-
   Future<List<WeatherForecast>> loadWeatherForecast(
-      double lon,
-      double lat,
-      ) async {
+    double lon,
+    double lat,
+  ) async {
     String baseUrl = 'https://api.openweathermap.org/data/2.5/forecast';
     String apiKey = '2490e19bf3443658945b392efebeae7c';
 
@@ -37,7 +35,7 @@ class OpenWeatherApiCall {
                 pressure: (item['main']['pressure'] as num).toDouble(),
                 cloudiness: (item['clouds']['all'] as num).toDouble(),
                 weatherCondition:
-                _parseWeatherCondition(item['weather'][0]['main']));
+                    _parseWeatherCondition(item['weather'][0]['main']));
 
             if (!groupedForecasts.containsKey(date)) {
               groupedForecasts[date] = [];
@@ -63,7 +61,7 @@ class OpenWeatherApiCall {
                 forecasts.map((f) => f.cloudiness).reduce((a, b) => a + b) /
                     forecasts.length;
             WeatherCondition avgWeatherCondition =
-            _determineMostFrequentCondition(forecasts);
+                _determineMostFrequentCondition(forecasts);
 
             averagedForecasts.add(WeatherForecast(
               date: date,
@@ -77,9 +75,8 @@ class OpenWeatherApiCall {
           });
           return averagedForecasts;
         }
-      }else {
+      } else {
         print('Failed to load weather data: ${response.statusCode}');
-
       }
     } catch (e) {
       print('Error occurred: $e');
@@ -87,38 +84,38 @@ class OpenWeatherApiCall {
     return [];
   }
 
-
-WeatherCondition _parseWeatherCondition(String condition) {
-  switch(condition.toLowerCase()){
-    case 'clear':
-      return WeatherCondition.sun;
-    case 'clouds':
-      return WeatherCondition.cloud;
-    case 'rain':
-      return WeatherCondition.rain;
-    case 'snow':
-      return WeatherCondition.snow;
-    default:
-      return WeatherCondition.partiallyCloudy;
-
-  }
-}
-
-WeatherCondition _determineMostFrequentCondition(List<WeatherForecast> forecasts) {
-  var conditionCounts = SplayTreeMap<WeatherCondition, int>((a,b)=> b.index.compareTo(a.index));
-  for(var forecast in forecasts){
-    conditionCounts.update(forecast.weatherCondition,(value) => value+1, ifAbsent: ()=>1);
+  WeatherCondition _parseWeatherCondition(String condition) {
+    switch (condition.toLowerCase()) {
+      case 'clear':
+        return WeatherCondition.sun;
+      case 'clouds':
+        return WeatherCondition.cloud;
+      case 'rain':
+        return WeatherCondition.rain;
+      case 'snow':
+        return WeatherCondition.snow;
+      default:
+        return WeatherCondition.partiallyCloudy;
+    }
   }
 
-  var sortedCondition = conditionCounts.entries.toList()
-      ..sort((a,b){
-         int compareCount = b.value.compareTo((a.value));
-         if(compareCount == 0){
-           return a.key.index.compareTo(b.key.index);
-         }
-         return compareCount;
+  WeatherCondition _determineMostFrequentCondition(
+      List<WeatherForecast> forecasts) {
+    var conditionCounts = SplayTreeMap<WeatherCondition, int>(
+        (a, b) => b.index.compareTo(a.index));
+    for (var forecast in forecasts) {
+      conditionCounts.update(forecast.weatherCondition, (value) => value + 1,
+          ifAbsent: () => 1);
+    }
+
+    var sortedCondition = conditionCounts.entries.toList()
+      ..sort((a, b) {
+        int compareCount = b.value.compareTo((a.value));
+        if (compareCount == 0) {
+          return a.key.index.compareTo(b.key.index);
+        }
+        return compareCount;
       });
     return sortedCondition.first.key;
+  }
 }
-}
-
