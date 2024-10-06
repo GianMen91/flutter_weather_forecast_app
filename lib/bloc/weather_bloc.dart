@@ -24,7 +24,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       ClearWeatherForecastEvent event,
       Emitter<WeatherState> emit,
       ) {
-    emit(state.copyWith(weatherForecast: []));
+    emit(state.copyWith(weatherForecast: [],currentCityName: ""));
   }
 
 
