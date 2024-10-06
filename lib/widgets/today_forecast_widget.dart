@@ -15,23 +15,47 @@ class TodayForecastWidget extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 10),
-        Text(
-          DateFormat('EEEE')
-              .format(DateTime.parse(listOfWeatherForecast[0].date)),
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontSize: 24,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          listOfWeatherForecast[0].weatherCondition.name,
-          style: const TextStyle(
-            fontSize: 18,
-            color: Colors.white,
-            fontWeight: FontWeight.w400,
-          ),
+        Row(
+          children: [
+            Text(
+              '${listOfWeatherForecast[0].temperature.toInt()}°',
+              style: const TextStyle(
+                fontSize: 60,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(width: 60),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // Aligns children to the start
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft, // Align to left
+                  child: Text(
+                    DateFormat('EEEE')
+                        .format(DateTime.parse(listOfWeatherForecast[0].date)),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 26,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft, // Align to left
+                  child: Text(
+                    listOfWeatherForecast[0].weatherCondition.name,
+                    style: const TextStyle(
+                      fontSize: 21,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
         ),
         const SizedBox(height: 20),
         // Placeholder for weather icon (can use network image or custom icon)
@@ -39,18 +63,24 @@ class TodayForecastWidget extends StatelessWidget {
           child: Icon(Icons.sunny, size: 100),
         ),
         const SizedBox(height: 20),
-        Text(
-          '${listOfWeatherForecast[0].temperature.toInt()}°',
-          style: const TextStyle(
-            fontSize: 60,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+        Column(
+          children: [
+            Container(
+                alignment: Alignment.centerLeft, // Align to left
+                child: Text(
+                    'Humidity: ${listOfWeatherForecast[0].humidity.toInt()} %',
+                    style: const TextStyle(color: Colors.white, fontSize: 15))),
+            Container(
+                alignment: Alignment.centerLeft, // Align to left
+                child: Text(
+                    'Pressure: ${listOfWeatherForecast[0].pressure.toInt()} hPa',
+                    style: const TextStyle(color: Colors.white, fontSize: 15))),
+            Container(
+                alignment: Alignment.centerLeft, // Align to left
+                child: Text('Wind: ${listOfWeatherForecast[0].wind} Km/h',
+                    style: const TextStyle(color: Colors.white, fontSize: 15))),
+          ],
         ),
-        const SizedBox(height: 20),
-        Text('Humidity: ${listOfWeatherForecast[0].humidity.toInt()} %', style: const TextStyle(color: Colors.white)),
-        Text('Pressure: ${listOfWeatherForecast[0].pressure.toInt()} hPa', style: const TextStyle(color: Colors.white)),
-        Text('Wind: ${listOfWeatherForecast[0].wind} Km/h', style: const TextStyle(color: Colors.white)),
       ],
     );
   }

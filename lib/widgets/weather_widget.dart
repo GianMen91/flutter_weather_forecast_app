@@ -18,24 +18,37 @@ class WeatherWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
-                const Icon(Icons.location_on, color: Colors.white),
-                const SizedBox(width: 10),
-                Text(
-                  cityName.toUpperCase(),
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                Row(
+                  children: [
+                    const Icon(Icons.location_on, color: Colors.white),
+                    const SizedBox(width: 10),
+                    Text(
+                      cityName.toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    // Handle back button press
+                  },
                 ),
               ],
             ),
             // Next Days Forecast - Display horizontally in a row
-
-            const SizedBox(height: 20),
             // Today Forecast
             Center(child: TodayForecastWidget(listOfWeatherForecast: listOfWeatherForecast)),
-
             const SizedBox(height: 20),
 
             // Next Days Forecast - Display horizontally in a row
@@ -43,7 +56,7 @@ class WeatherWidget extends StatelessWidget {
               'Next Days Forecast',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
