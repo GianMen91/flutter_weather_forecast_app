@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_forecast_app/bloc/weather_event.dart';
 import 'package:flutter_weather_forecast_app/bloc/weather_state.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../repository/weather_repository.dart';
@@ -13,50 +14,55 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 
   WeatherBloc({required this.openWeatherApiCall})
       : super(const WeatherState()) {
-    on<CheckLocationPermissionEvent>(_checkLocationPermissionEvent);
     on<AskForLocationPermissionEvent>(_askForLocationPermissionEvent);
     on<LoadWeatherEvent>(_loadWeatherEvent);
   }
 
-  FutureOr<void> _loadWeatherEvent(
-    LoadWeatherEvent event,
-    Emitter<WeatherState> emit,
-  ) async {
-    emit(state.copyWith(isLoading: true));
-
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    double longitude = position.longitude;
-    double latitude = position.latitude;
-    final weatherForecast = await openWeatherApiCall.loadWeatherForecast(
-        longitude ?? 0.0, latitude ?? 0.0);
-    emit(state.copyWith(isLoading: false,weatherForecast:weatherForecast,permissionState: PermissionState.granted ));
-  }
-
-  FutureOr<void> _checkLocationPermissionEvent(
-    CheckLocationPermissionEvent event,
-    Emitter<WeatherState> emit,
-  ) async {
-    var status = await Permission.location.status;
-
-    if (status.isGranted) {
-      add(LoadWeatherEvent());
-    } else {
-      emit(state.copyWith(permissionState: PermissionState.declined));
-    }
-  }
 
   FutureOr<void> _askForLocationPermissionEvent(
-    AskForLocationPermissionEvent event,
-    Emitter<WeatherState> emit,
-  ) async {
+      AskForLocationPermissionEvent event,
+      Emitter<WeatherState> emit,
+      ) async {
     var status = await Permission.location.request();
 
     if (status.isGranted) {
-      add(LoadWeatherEvent());
-    } else {
-      emit(state.copyWith(permissionState: PermissionState.declined));
+      // If permission is granted, get the current location
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+
+      // Fetch the city name using the location coordinates
+      String cityName = await _getCityNameFromCoordinates(
+          position.latitude, position.longitude);
+
+      // Update the state with the city name, but don't call the API
+      emit(state.copyWith(
+        currentCityName: cityName
+      ));
     }
+  }
+
+  FutureOr<void> _loadWeatherEvent(
+      LoadWeatherEvent event,
+      Emitter<WeatherState> emit,
+      ) async {
+    emit(state.copyWith(isLoading: true));
+
+    try {
+      // Use the provided city name to load the weather forecast
+      final weatherForecast = await openWeatherApiCall.loadWeatherForecast(event.city);
+
+      emit(state.copyWith(
+        isLoading: false,
+        weatherForecast: weatherForecast,
+      ));
+    } catch (error) {
+      emit(state.copyWith(isLoading: false));
+    }
+  }
+
+  Future<String> _getCityNameFromCoordinates(double latitude, double longitude) async {
+    // Use a geocoding service to get the city name from the coordinates
+    List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);
+    return placemarks.first.locality ?? 'Unknown City';
   }
 }
