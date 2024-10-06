@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_forecast_app/widgets/weather_image_widget.dart';
 import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 import '../models/weather.dart';
 
 class TodayForecastWidget extends StatelessWidget {
