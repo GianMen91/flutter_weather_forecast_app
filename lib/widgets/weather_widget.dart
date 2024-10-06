@@ -74,7 +74,7 @@ class WeatherWidget extends StatelessWidget {
                 children: List.generate(
                   listOfWeatherForecast.length - 1,
                   (index) => NextDaysForecastWidget(
-                    listOfWeatherForecast: listOfWeatherForecast[index + 1],
+                    weatherForecast: listOfWeatherForecast[index + 1],
                   ),
                 ),
               ),

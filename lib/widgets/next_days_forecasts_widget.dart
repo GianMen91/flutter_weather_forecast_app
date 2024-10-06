@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_forecast_app/widgets/weather_image_widget.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import '../models/weather.dart';
 
 class NextDaysForecastWidget extends StatelessWidget {
   const NextDaysForecastWidget({
     super.key,
-    required this.listOfWeatherForecast,
+    required this.weatherForecast,
   });
 
-  final Weather listOfWeatherForecast;
+  final Weather weatherForecast;
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +28,17 @@ class NextDaysForecastWidget extends StatelessWidget {
         children: [
           Text(
             DateFormat('EEE')
-                .format(DateTime.parse(listOfWeatherForecast.date)),
+                .format(DateTime.parse(weatherForecast.date)),
             style: const TextStyle(
               fontWeight: FontWeight.w500,
               color: Colors.white,
             ),
           ),
           const SizedBox(height: 10),
-          const Icon(Icons.sunny, size: 40, color: Colors.white),
+          WeatherImageWidget(weatherConditionName: weatherForecast.weatherCondition.name),
           const SizedBox(height: 10),
           Text(
-            '${listOfWeatherForecast.tempMin.toInt()}° / ${listOfWeatherForecast.tempMax.toInt()}°',
+            '${weatherForecast.tempMin.toInt()}° / ${weatherForecast.tempMax.toInt()}°',
             style: const TextStyle(color: Colors.white),
           ),
         ],
