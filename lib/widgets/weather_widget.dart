@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_forecast_app/widgets/today_forecast.dart';
-
 import '../models/weather.dart';
 import 'next_days_forecasts.dart';
 
@@ -13,16 +11,36 @@ class WeatherWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: listOfWeatherForecast.length,
-            itemBuilder: (context, index) {
-              if(index == 0){
-                return  TodayForecast(listOfWeatherForecast: listOfWeatherForecast);
-              }else {
-                return NextDaysForecast(
-                    listOfWeatherForecast: listOfWeatherForecast[index-1]);
-              }
-            }));
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Today Forecast
+            Center(child: TodayForecast(listOfWeatherForecast: listOfWeatherForecast)),
+
+            const SizedBox(height: 20),
+
+            // Next Days Forecast - Display horizontally in a row
+            const Text(
+              'Next Days Forecast',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(
+                  listOfWeatherForecast.length - 1,
+                  (index) => NextDaysForecast(
+                    listOfWeatherForecast: listOfWeatherForecast[index + 1],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
