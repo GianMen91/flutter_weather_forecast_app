@@ -54,6 +54,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       emit(state.copyWith(
         isLoading: false,
         weatherForecast: weatherForecast,
+          currentCityName: event.city
       ));
     } catch (error) {
       emit(state.copyWith(isLoading: false));
