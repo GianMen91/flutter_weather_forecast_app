@@ -28,8 +28,7 @@ class SearchScreenState extends State<SearchScreen> {
               maxWidth: MediaQuery.of(context).size.width * 0.8, // Set max width to 80% of the screen width
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // Center vertically
-              crossAxisAlignment: CrossAxisAlignment.center, // Center horizontally
+              mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min, // Minimize the size of the column
               children: <Widget>[
                 Padding(

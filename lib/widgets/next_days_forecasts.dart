@@ -34,7 +34,7 @@ class NextDaysForecast extends StatelessWidget {
           const Icon(Icons.sunny, size: 40),
           const SizedBox(height: 10),
           Text(
-              '${listOfWeatherForecast.temp_min.toInt()}° / ${listOfWeatherForecast.temp_max.toInt()}°'),
+              '${listOfWeatherForecast.tempMin.toInt()}° / ${listOfWeatherForecast.tempMax.toInt()}°'),
         ],
       ),
     );

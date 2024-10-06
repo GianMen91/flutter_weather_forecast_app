@@ -1,8 +1,8 @@
 class Weather {
   final String date;
   final double temperature;
-  final double temp_min;
-  final double temp_max;
+  final double tempMin;
+  final double tempMax;
   final double humidity;
   final double wind;
   final double pressure;
@@ -12,8 +12,8 @@ class Weather {
   Weather({
     required this.date,
     required this.temperature,
-    required this.temp_min,
-    required this.temp_max,
+    required this.tempMin,
+    required this.tempMax,
     required this.humidity,
     required this.wind,
     required this.pressure,
@@ -25,8 +25,8 @@ class Weather {
     return Weather(
       date: json['date'] as String,
       temperature: (json['temperature'] as num).toDouble(),
-      temp_min: (json['temp_min'] as num).toDouble(),
-      temp_max: (json['temp_max'] as num).toDouble(),
+      tempMin: (json['temp_min'] as num).toDouble(),
+      tempMax: (json['temp_max'] as num).toDouble(),
       humidity: (json['humidity'] as num).toDouble(),
       wind: (json['wind'] as num).toDouble(),
       pressure: (json['pressure'] as num).toDouble(),
@@ -54,7 +54,7 @@ class Weather {
 
   @override
   String toString() {
-    return 'WeatherForecast{date: $date, temperature: $temp_min, temp_min: $temp_max, temp_max: $temperature, humidity: $humidity, wind: $wind, pressure: $pressure, cloudiness: $cloudiness, weatherCondition: $weatherCondition}';
+    return 'WeatherForecast{date: $date, temperature: $tempMin, temp_min: $tempMax, temp_max: $temperature, humidity: $humidity, wind: $wind, pressure: $pressure, cloudiness: $cloudiness, weatherCondition: $weatherCondition}';
   }
 }
 

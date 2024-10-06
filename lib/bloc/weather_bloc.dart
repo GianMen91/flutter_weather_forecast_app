@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_forecast_app/bloc/weather_event.dart';
 import 'package:flutter_weather_forecast_app/bloc/weather_state.dart';
@@ -56,7 +57,10 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         weatherForecast: weatherForecast,
           currentCityName: event.city
       ));
-    } catch (error) {
+    } on Exception catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       emit(state.copyWith(isLoading: false));
     }
   }

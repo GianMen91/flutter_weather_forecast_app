@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_weather_forecast_app/models/weather.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,10 +26,14 @@ class WeatherRepository {
           return decodeAverageForecast(jsonData);
         }
       } else {
-        print('Failed to load weather data: ${response.statusCode}');
+        if (kDebugMode) {
+          print('Failed to load weather data: ${response.statusCode}');
+        }
       }
-    } catch (e) {
-      print('Error occurred: $e');
+    } on Exception catch (e) {
+      if (kDebugMode) {
+        print('Error occurred: $e');
+      }
     }
     return [];
   }
@@ -41,8 +46,8 @@ class WeatherRepository {
       Weather forecast = Weather(
           date: date,
           temperature: (item['main']['temp'] as num).toDouble(),
-          temp_min: (item['main']['temp_min'] as num).toDouble(),
-          temp_max: (item['main']['temp_max'] as num).toDouble(),
+          tempMin: (item['main']['temp_min'] as num).toDouble(),
+          tempMax: (item['main']['temp_max'] as num).toDouble(),
           humidity: (item['main']['humidity'] as num).toDouble(),
           wind: (item['wind']['speed'] as num).toDouble(),
           pressure: (item['main']['pressure'] as num).toDouble(),
@@ -62,10 +67,10 @@ class WeatherRepository {
           forecasts.map((f) => f.temperature).reduce((a, b) => a + b) /
               forecasts.length;
       double avgTempMin =
-          forecasts.map((f) => f.temp_min).reduce((a, b) => a + b) /
+          forecasts.map((f) => f.tempMin).reduce((a, b) => a + b) /
               forecasts.length;
       double avgTempMax =
-          forecasts.map((f) => f.temp_max).reduce((a, b) => a + b) /
+          forecasts.map((f) => f.tempMax).reduce((a, b) => a + b) /
               forecasts.length;
       double avgHumidity =
           forecasts.map((f) => f.humidity).reduce((a, b) => a + b) /
@@ -85,8 +90,8 @@ class WeatherRepository {
       averagedForecasts.add(Weather(
         date: date,
         temperature: avgTemp,
-        temp_min: avgTempMin,
-        temp_max: avgTempMax,
+        tempMin: avgTempMin,
+        tempMax: avgTempMax,
         humidity: avgHumidity,
         wind: avgWind,
         pressure: avgPressure,
