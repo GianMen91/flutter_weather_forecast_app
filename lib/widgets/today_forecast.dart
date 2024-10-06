@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 import '../model/weather_forecast.dart';
 
 class TodayForecast extends StatelessWidget {
@@ -16,20 +16,26 @@ class TodayForecast extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(height: 10),
-        Text('Tuesday', style:TextStyle(fontSize: 25, fontWeight: FontWeight.bold,color: Colors.black)),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
+        Text(
+            DateFormat('EEEE').format(
+              DateTime.parse(listOfWeatherForecast[0].date),
+            ),
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+            )),
+        const SizedBox(height: 10),
         Card(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(Icons.sunny, size: 100),
-                Text(listOfWeatherForecast[0] .date),
-                Text('Temperatyre:${listOfWeatherForecast[0].temperature}'),
-              ],
-            )),
-        SizedBox(height: 10),
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Icon(Icons.sunny, size: 100),
+            Text(listOfWeatherForecast[0].date),
+            Text('Temperatyre:${listOfWeatherForecast[0].temperature} °C'),
+          ],
+        )),
+        const SizedBox(height: 10),
       ],
     );
   }
