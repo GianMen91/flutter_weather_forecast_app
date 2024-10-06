@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../model/weather_forecast.dart';
 
@@ -18,9 +19,15 @@ class NextDaysForecast extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(listOfWeatherForecast.date),
+            Text(
+                DateFormat('EEEE').format(
+                  DateTime.parse(listOfWeatherForecast.date),
+                ),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                )),
             Icon(Icons.sunny, size: 30),
-            Text(listOfWeatherForecast.temperature.toString()),
+            Text('${listOfWeatherForecast.temp_min.toInt()} ° / ${listOfWeatherForecast.temp_max.toInt()} '),
           ],
         ));
   }
