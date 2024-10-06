@@ -14,7 +14,7 @@ class WeatherForecastScreen extends StatelessWidget {
     final bloc = BlocProvider.of<WeatherBloc>(context);
     return BlocBuilder<WeatherBloc, WeatherState>(builder: (context, state) {
       return Scaffold(
-        backgroundColor: Color(0xFF48BEFE),
+        backgroundColor: const Color(0xFF63C4FD),
         body: _getWidgetDependingByPermission(state, bloc),
       );
     });
@@ -24,7 +24,7 @@ class WeatherForecastScreen extends StatelessWidget {
     if (state.isLoading) {
       return const Center(
         child: CircularProgressIndicator(
-          color: Colors.blue,
+          color: Colors.white,
         ),
       );
     }
