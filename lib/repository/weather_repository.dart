@@ -6,14 +6,13 @@ import 'package:http/http.dart' as http;
 
 class WeatherRepository {
   Future<List<Weather>> loadWeatherForecast(
-    double lon,
-    double lat,
+    String cityName,
   ) async {
     String baseUrl = 'https://api.openweathermap.org/data/2.5/forecast';
     String apiKey = '2490e19bf3443658945b392efebeae7c';
 
     String url =
-        '$baseUrl/?appid=$apiKey&lat=$lat&lon=$lon&exclude=hourly,daily&units=metric';
+        '$baseUrl/?appid=$apiKey&q=$cityName&exclude=hourly,daily&units=metric';
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -23,67 +22,7 @@ class WeatherRepository {
 
         // Check if 'list' is a valid list and contains elements
         if (jsonData['list'] is List && (jsonData['list'] as List).isNotEmpty) {
-          Map<String, List<Weather>> groupedForecasts = {};
-
-          for (var item in jsonData['list']) {
-            String date = item['dt_txt'].substring(0, 10);
-            Weather forecast = Weather(
-                date: date,
-                temperature: (item['main']['temp'] as num).toDouble(),
-                temp_min: (item['main']['temp_min'] as num).toDouble(),
-                temp_max: (item['main']['temp_max'] as num).toDouble(),
-                humidity: (item['main']['humidity'] as num).toDouble(),
-                wind: (item['wind']['speed'] as num).toDouble(),
-                pressure: (item['main']['pressure'] as num).toDouble(),
-                cloudiness: (item['clouds']['all'] as num).toDouble(),
-                weatherCondition:
-                    _parseWeatherCondition(item['weather'][0]['main']));
-
-            if (!groupedForecasts.containsKey(date)) {
-              groupedForecasts[date] = [];
-            }
-            groupedForecasts[date]!.add(forecast);
-          }
-
-          List<Weather> averagedForecasts = [];
-          groupedForecasts.forEach((date, forecasts) {
-            double avgTemp =
-                forecasts.map((f) => f.temperature).reduce((a, b) => a + b) /
-                    forecasts.length;
-            double avgTempMin =
-                forecasts.map((f) => f.temp_min).reduce((a, b) => a + b) /
-                    forecasts.length;
-            double avgTempMax =
-                forecasts.map((f) => f.temp_max).reduce((a, b) => a + b) /
-                    forecasts.length;
-            double avgHumidity =
-                forecasts.map((f) => f.humidity).reduce((a, b) => a + b) /
-                    forecasts.length;
-            double avgWind =
-                forecasts.map((f) => f.wind).reduce((a, b) => a + b) /
-                    forecasts.length;
-            double avgPressure =
-                forecasts.map((f) => f.pressure).reduce((a, b) => a + b) /
-                    forecasts.length;
-            double avgCloudiness =
-                forecasts.map((f) => f.cloudiness).reduce((a, b) => a + b) /
-                    forecasts.length;
-            WeatherCondition avgWeatherCondition =
-                _determineMostFrequentCondition(forecasts);
-
-            averagedForecasts.add(Weather(
-              date: date,
-              temperature: avgTemp,
-              temp_min: avgTempMin,
-              temp_max: avgTempMax,
-              humidity: avgHumidity,
-              wind: avgWind,
-              pressure: avgPressure,
-              cloudiness: avgCloudiness,
-              weatherCondition: avgWeatherCondition,
-            ));
-          });
-          return averagedForecasts;
+          return decodeAverageForecast(jsonData);
         }
       } else {
         print('Failed to load weather data: ${response.statusCode}');
@@ -92,6 +31,70 @@ class WeatherRepository {
       print('Error occurred: $e');
     }
     return [];
+  }
+
+  List<Weather> decodeAverageForecast(jsonData) {
+    Map<String, List<Weather>> groupedForecasts = {};
+
+    for (var item in jsonData['list']) {
+      String date = item['dt_txt'].substring(0, 10);
+      Weather forecast = Weather(
+          date: date,
+          temperature: (item['main']['temp'] as num).toDouble(),
+          temp_min: (item['main']['temp_min'] as num).toDouble(),
+          temp_max: (item['main']['temp_max'] as num).toDouble(),
+          humidity: (item['main']['humidity'] as num).toDouble(),
+          wind: (item['wind']['speed'] as num).toDouble(),
+          pressure: (item['main']['pressure'] as num).toDouble(),
+          cloudiness: (item['clouds']['all'] as num).toDouble(),
+          weatherCondition:
+              _parseWeatherCondition(item['weather'][0]['main']));
+
+      if (!groupedForecasts.containsKey(date)) {
+        groupedForecasts[date] = [];
+      }
+      groupedForecasts[date]!.add(forecast);
+    }
+
+    List<Weather> averagedForecasts = [];
+    groupedForecasts.forEach((date, forecasts) {
+      double avgTemp =
+          forecasts.map((f) => f.temperature).reduce((a, b) => a + b) /
+              forecasts.length;
+      double avgTempMin =
+          forecasts.map((f) => f.temp_min).reduce((a, b) => a + b) /
+              forecasts.length;
+      double avgTempMax =
+          forecasts.map((f) => f.temp_max).reduce((a, b) => a + b) /
+              forecasts.length;
+      double avgHumidity =
+          forecasts.map((f) => f.humidity).reduce((a, b) => a + b) /
+              forecasts.length;
+      double avgWind =
+          forecasts.map((f) => f.wind).reduce((a, b) => a + b) /
+              forecasts.length;
+      double avgPressure =
+          forecasts.map((f) => f.pressure).reduce((a, b) => a + b) /
+              forecasts.length;
+      double avgCloudiness =
+          forecasts.map((f) => f.cloudiness).reduce((a, b) => a + b) /
+              forecasts.length;
+      WeatherCondition avgWeatherCondition =
+          _determineMostFrequentCondition(forecasts);
+
+      averagedForecasts.add(Weather(
+        date: date,
+        temperature: avgTemp,
+        temp_min: avgTempMin,
+        temp_max: avgTempMax,
+        humidity: avgHumidity,
+        wind: avgWind,
+        pressure: avgPressure,
+        cloudiness: avgCloudiness,
+        weatherCondition: avgWeatherCondition,
+      ));
+    });
+    return averagedForecasts;
   }
 
   WeatherCondition _parseWeatherCondition(String condition) {
