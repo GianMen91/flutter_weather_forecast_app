@@ -4,7 +4,8 @@ import '../models/weather.dart';
 import 'next_days_forecasts_widget.dart';
 
 class WeatherWidget extends StatelessWidget {
-  const WeatherWidget({super.key, required this.listOfWeatherForecast, required this.cityName});
+  const WeatherWidget(
+      {super.key, required this.listOfWeatherForecast, required this.cityName});
 
   final List<Weather> listOfWeatherForecast;
   final String cityName;
@@ -12,9 +13,15 @@ class WeatherWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+        child: Center(
+            // Use Center to center the SingleChildScrollView
+            child: SingleChildScrollView(
+      child: ConstrainedBox(
+        // Use ConstrainedBox to limit the width of the child elements
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width *
+              0.8, // Set max width to 80% of the screen width
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -46,15 +53,19 @@ class WeatherWidget extends StatelessWidget {
                 ),
               ],
             ),
-            // Next Days Forecast - Display horizontally in a row
-            // Today Forecast
-            Center(child: TodayForecastWidget(listOfWeatherForecast: listOfWeatherForecast)),
+            const SizedBox(height: 20),
+            Center(
+                child: TodayForecastWidget(
+                    listOfWeatherForecast: listOfWeatherForecast)),
             const SizedBox(height: 20),
 
             // Next Days Forecast - Display horizontally in a row
             const Text(
               'Next Days Forecast',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
             ),
             const SizedBox(height: 20),
             SingleChildScrollView(
@@ -71,6 +82,6 @@ class WeatherWidget extends StatelessWidget {
           ],
         ),
       ),
-    );
+    )));
   }
 }

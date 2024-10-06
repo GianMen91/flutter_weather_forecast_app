@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import '../models/weather.dart';
 
 class TodayForecastWidget extends StatelessWidget {
@@ -59,8 +61,11 @@ class TodayForecastWidget extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         // Placeholder for weather icon (can use network image or custom icon)
-        const Center(
-          child: Icon(Icons.sunny, size: 100),
+        SizedBox(
+          width: 200,
+          child: Center(
+            child: Lottie.asset(getAnimation(listOfWeatherForecast[0].weatherCondition.name)),
+          ),
         ),
         const SizedBox(height: 20),
         Column(
@@ -77,11 +82,37 @@ class TodayForecastWidget extends StatelessWidget {
                     style: const TextStyle(color: Colors.white, fontSize: 15))),
             Container(
                 alignment: Alignment.centerLeft, // Align to left
-                child: Text('Wind: ${listOfWeatherForecast[0].wind} Km/h',
+                child: Text('Wind: ${listOfWeatherForecast[0].wind.toInt()} Km/h',
                     style: const TextStyle(color: Colors.white, fontSize: 15))),
           ],
         ),
       ],
     );
+  }
+
+  String getAnimation(String? weatherConditionName){
+    if(weatherConditionName == null) return 'assets/sunny.json';
+
+    switch(weatherConditionName.toLowerCase()){
+      case 'cloud':
+      case 'smoke':
+      case 'haze':
+      case 'dust':
+      case 'fog':
+        return 'assets/cloud.json';
+      case 'rain':
+      case 'drizzle':
+      case 'shower rain':
+      case 'thunderstorm':
+        return 'assets/rain.json';
+      case 'clear':
+        return 'assets/sunny.json';
+      case 'mist':
+        return 'assets/mist.json';
+      case 'snow':
+        return 'assets/snow.json';
+      default:
+        return 'assets/sunny.json';
+    }
   }
 }
