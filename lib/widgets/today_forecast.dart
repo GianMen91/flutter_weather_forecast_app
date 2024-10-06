@@ -34,16 +34,8 @@ class TodayForecast extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         // Placeholder for weather icon (can use network image or custom icon)
-        Container(
-          width: 200,
-          height: 200,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: const Center(
-            child: Icon(Icons.sunny, size: 100),
-          ),
+        const Center(
+          child: Icon(Icons.sunny, size: 100),
         ),
         const SizedBox(height: 20),
         Text(

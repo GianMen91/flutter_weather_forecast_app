@@ -22,11 +22,11 @@ class SearchScreenState extends State<SearchScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Center(
-              child: Container(
+          const Center(
+              child: SizedBox(
             height: 300,
             width: 300,
-            child: const Icon(Icons.safety_check),
+            child: Icon(Icons.safety_check),
           )),
           BlocBuilder<WeatherBloc, WeatherState>(
             builder: (context, state) {
@@ -49,21 +49,19 @@ class SearchScreenState extends State<SearchScreen> {
                       child: TextField(
                         controller: _controller,
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.search, color: Colors.black,),
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            color: Colors.black,
+                          ),
                           enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
                           focusedBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              borderSide: BorderSide(
-                                  color: Colors.blue
-                              )
-                          ),
-
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(color: Colors.blue)),
                           hintText: "City Name",
                           hintStyle: const TextStyle(color: Colors.grey),
-
                           labelText: 'City Name',
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -85,9 +83,12 @@ class SearchScreenState extends State<SearchScreen> {
                       width: MediaQuery.of(context).size.width,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.blue),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
