@@ -54,7 +54,7 @@ class Weather {
 
   @override
   String toString() {
-    return 'WeatherForecast{date: $date, temperature: $tempMin, temp_min: $tempMax, temp_max: $temperature, humidity: $humidity, wind: $wind, pressure: $pressure, cloudiness: $cloudiness, weatherCondition: $weatherCondition}';
+    return 'WeatherForecast{date: $date, temperature: $temperature, temp_min: $tempMin, temp_max: $tempMax, humidity: $humidity, wind: $wind, pressure: $pressure, cloudiness: $cloudiness, weatherCondition: $weatherCondition}';
   }
 }
 
