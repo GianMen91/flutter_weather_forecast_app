@@ -20,6 +20,7 @@ class TodayForecastWidget extends StatelessWidget {
               .format(DateTime.parse(listOfWeatherForecast[0].date)),
           style: const TextStyle(
             fontWeight: FontWeight.bold,
+            color: Colors.white,
             fontSize: 24,
           ),
         ),
@@ -28,6 +29,7 @@ class TodayForecastWidget extends StatelessWidget {
           listOfWeatherForecast[0].weatherCondition.name,
           style: const TextStyle(
             fontSize: 18,
+            color: Colors.white,
             fontWeight: FontWeight.w400,
           ),
         ),
@@ -41,13 +43,14 @@ class TodayForecastWidget extends StatelessWidget {
           '${listOfWeatherForecast[0].temperature.toInt()}°',
           style: const TextStyle(
             fontSize: 60,
+            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 20),
-        Text('Humidity: ${listOfWeatherForecast[0].humidity.toInt()} %'),
-        Text('Pressure: ${listOfWeatherForecast[0].pressure.toInt()} hPa'),
-        Text('Wind: ${listOfWeatherForecast[0].wind} Km/h'),
+        Text('Humidity: ${listOfWeatherForecast[0].humidity.toInt()} %', style: const TextStyle(color: Colors.white)),
+        Text('Pressure: ${listOfWeatherForecast[0].pressure.toInt()} hPa', style: const TextStyle(color: Colors.white)),
+        Text('Wind: ${listOfWeatherForecast[0].wind} Km/h', style: const TextStyle(color: Colors.white)),
       ],
     );
   }

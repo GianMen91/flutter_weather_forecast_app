@@ -22,10 +22,11 @@ class WeatherWidget extends StatelessWidget {
             Row(
               children: [
 
-                const Icon(Icons.location_on),
+                const Icon(Icons.location_on, color: Colors.white),
+                const SizedBox(width: 10),
                 Text(
                   cityName.toUpperCase(),
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ],
             ),
@@ -40,7 +41,7 @@ class WeatherWidget extends StatelessWidget {
             // Next Days Forecast - Display horizontally in a row
             const Text(
               'Next Days Forecast',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 10),
             SingleChildScrollView(
