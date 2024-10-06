@@ -1,11 +1,11 @@
 import 'dart:collection';
 import 'dart:convert';
 
-import 'package:flutter_weather_forecast_app/model/weather_forecast.dart';
+import 'package:flutter_weather_forecast_app/models/weather.dart';
 import 'package:http/http.dart' as http;
 
-class OpenWeatherApiCall {
-  Future<List<WeatherForecast>> loadWeatherForecast(
+class WeatherRepository {
+  Future<List<Weather>> loadWeatherForecast(
     double lon,
     double lat,
   ) async {
@@ -23,11 +23,11 @@ class OpenWeatherApiCall {
 
         // Check if 'list' is a valid list and contains elements
         if (jsonData['list'] is List && (jsonData['list'] as List).isNotEmpty) {
-          Map<String, List<WeatherForecast>> groupedForecasts = {};
+          Map<String, List<Weather>> groupedForecasts = {};
 
           for (var item in jsonData['list']) {
             String date = item['dt_txt'].substring(0, 10);
-            WeatherForecast forecast = WeatherForecast(
+            Weather forecast = Weather(
                 date: date,
                 temperature: (item['main']['temp'] as num).toDouble(),
                 temp_min: (item['main']['temp_min'] as num).toDouble(),
@@ -45,7 +45,7 @@ class OpenWeatherApiCall {
             groupedForecasts[date]!.add(forecast);
           }
 
-          List<WeatherForecast> averagedForecasts = [];
+          List<Weather> averagedForecasts = [];
           groupedForecasts.forEach((date, forecasts) {
             double avgTemp =
                 forecasts.map((f) => f.temperature).reduce((a, b) => a + b) /
@@ -71,7 +71,7 @@ class OpenWeatherApiCall {
             WeatherCondition avgWeatherCondition =
                 _determineMostFrequentCondition(forecasts);
 
-            averagedForecasts.add(WeatherForecast(
+            averagedForecasts.add(Weather(
               date: date,
               temperature: avgTemp,
               temp_min: avgTempMin,
@@ -110,7 +110,7 @@ class OpenWeatherApiCall {
   }
 
   WeatherCondition _determineMostFrequentCondition(
-      List<WeatherForecast> forecasts) {
+      List<Weather> forecasts) {
     var conditionCounts = SplayTreeMap<WeatherCondition, int>(
         (a, b) => b.index.compareTo(a.index));
     for (var forecast in forecasts) {

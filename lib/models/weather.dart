@@ -1,4 +1,4 @@
-class WeatherForecast {
+class Weather {
   final String date;
   final double temperature;
   final double temp_min;
@@ -9,7 +9,7 @@ class WeatherForecast {
   final double cloudiness;
   final WeatherCondition weatherCondition;
 
-  WeatherForecast({
+  Weather({
     required this.date,
     required this.temperature,
     required this.temp_min,
@@ -21,8 +21,8 @@ class WeatherForecast {
     required this.weatherCondition,
   });
 
-  factory WeatherForecast.fromJson(Map<String, dynamic> json) {
-    return WeatherForecast(
+  factory Weather.fromJson(Map<String, dynamic> json) {
+    return Weather(
       date: json['date'] as String,
       temperature: (json['temperature'] as num).toDouble(),
       temp_min: (json['temp_min'] as num).toDouble(),

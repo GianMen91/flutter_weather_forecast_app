@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../model/weather_forecast.dart';
+import '../models/weather.dart';
 
 class TodayForecast extends StatelessWidget {
   const TodayForecast({
@@ -9,7 +9,7 @@ class TodayForecast extends StatelessWidget {
     required this.listOfWeatherForecast,
   });
 
-  final List<WeatherForecast> listOfWeatherForecast;
+  final List<Weather> listOfWeatherForecast;
 
   @override
   Widget build(BuildContext context) {

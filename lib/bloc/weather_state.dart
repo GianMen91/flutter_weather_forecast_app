@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-import '../model/weather_forecast.dart';
+import '../models/weather.dart';
 
 class WeatherState extends Equatable {
   final bool isLoading;
   final PermissionState permissionState;
-  final List<WeatherForecast> weatherForecast;
+  final List<Weather> weatherForecast;
 
   const WeatherState(
       {this.weatherForecast = const [],
@@ -16,7 +16,7 @@ class WeatherState extends Equatable {
   List<Object?> get props => [weatherForecast, isLoading, permissionState];
 
   WeatherState copyWith({
-    List<WeatherForecast>? weatherForecast,
+    List<Weather>? weatherForecast,
     bool? isLoading,
     PermissionState? permissionState,
   }) {

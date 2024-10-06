@@ -5,11 +5,11 @@ import 'package:flutter_weather_forecast_app/bloc/weather_event.dart';
 import 'package:flutter_weather_forecast_app/bloc/weather_state.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../network/open_weather_api_call.dart';
+import '../repository/weather_repository.dart';
 import 'package:geolocator/geolocator.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
-  final OpenWeatherApiCall openWeatherApiCall;
+  final WeatherRepository openWeatherApiCall;
 
   WeatherBloc({required this.openWeatherApiCall})
       : super(const WeatherState()) {

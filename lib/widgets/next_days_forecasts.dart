@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../model/weather_forecast.dart';
+import '../models/weather.dart';
 
 class NextDaysForecast extends StatelessWidget {
   const NextDaysForecast({
@@ -10,7 +10,7 @@ class NextDaysForecast extends StatelessWidget {
     required this.listOfWeatherForecast,
   });
 
-  final WeatherForecast listOfWeatherForecast;
+  final Weather listOfWeatherForecast;
 
   @override
   Widget build(BuildContext context) {
