@@ -4,27 +4,27 @@ import '../models/weather.dart';
 
 class WeatherState extends Equatable {
   final bool isLoading;
-  final PermissionState permissionState;
+
   final List<Weather> weatherForecast;
+  final String currentCityName;
 
   const WeatherState(
       {this.weatherForecast = const [],
-      this.isLoading = false,
-      this.permissionState = PermissionState.declined});
+        this.currentCityName ="",
+      this.isLoading = false,});
 
   @override
-  List<Object?> get props => [weatherForecast, isLoading, permissionState];
+  List<Object?> get props => [weatherForecast, isLoading, currentCityName];
 
   WeatherState copyWith({
     List<Weather>? weatherForecast,
+    String? currentCityName,
     bool? isLoading,
-    PermissionState? permissionState,
   }) {
     return WeatherState(
         weatherForecast: weatherForecast ?? this.weatherForecast,
+        currentCityName: currentCityName ?? this.currentCityName,
         isLoading: isLoading ?? this.isLoading,
-        permissionState: permissionState ?? this.permissionState);
+        );
   }
 }
-
-enum PermissionState { granted, declined }
