@@ -14,6 +14,7 @@ class WeatherForecastScreen extends StatelessWidget {
     final bloc = BlocProvider.of<WeatherBloc>(context);
     return BlocBuilder<WeatherBloc, WeatherState>(builder: (context, state) {
       return Scaffold(
+        backgroundColor: Color(0xFF48BEFE),
         body: _getWidgetDependingByPermission(state, bloc),
       );
     });
@@ -29,7 +30,7 @@ class WeatherForecastScreen extends StatelessWidget {
     }
 
     if (state.weatherForecast.isNotEmpty) {
-      return WeatherWidget(listOfWeatherForecast: state.weatherForecast);
+      return WeatherWidget(listOfWeatherForecast: state.weatherForecast, cityName: state.currentCityName);
     } else {
       return SearchScreen(bloc: bloc);
     }
