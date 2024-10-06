@@ -21,10 +21,17 @@ class WeatherAppMainScreen extends StatelessWidget {
   }
 
   Widget _getWidgetDependingByPermission(WeatherState state, WeatherBloc bloc) {
+    if(state.isLoading){
+      return const CircularProgressIndicator(
+        color: Colors.blue,
+      );
+    }
     if (state.permissionState == PermissionState.granted) {
       return WeatherWidget(listOfWeatherForecast: state.weatherForecast);
+    }else{
+      return PermissionWidget(bloc: bloc);
     }
-    return PermissionWidget(bloc: bloc);
+
   }
 }
 
