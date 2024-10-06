@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/weather.dart';
 
-class TodayForecast extends StatelessWidget {
-  const TodayForecast({
+class TodayForecastWidget extends StatelessWidget {
+  const TodayForecastWidget({
     super.key,
     required this.listOfWeatherForecast,
   });

@@ -5,16 +5,11 @@ import 'package:flutter_weather_forecast_app/bloc/weather_event.dart';
 import 'package:flutter_weather_forecast_app/bloc/weather_state.dart';
 import 'package:lottie/lottie.dart';
 
-class SearchScreen extends StatefulWidget {
+class SearchWidget extends StatelessWidget {
+
+  SearchWidget({required this.bloc, super.key});
   final WeatherBloc bloc;
 
-  const SearchScreen({required this.bloc, super.key});
-
-  @override
-  SearchScreenState createState() => SearchScreenState();
-}
-
-class SearchScreenState extends State<SearchScreen> {
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -78,7 +73,7 @@ class SearchScreenState extends State<SearchScreen> {
                                   ),
                                   onPressed: () {
                                     // Request location permission and update city name
-                                    widget.bloc.add(AskForLocationPermissionEvent());
+                                    bloc.add(AskForLocationPermissionEvent());
                                   },
                                 ),
                               ),
@@ -101,7 +96,7 @@ class SearchScreenState extends State<SearchScreen> {
                               ),
                               onPressed: () {
                                 // Trigger the API call with the entered city name
-                                widget.bloc.add(LoadWeatherEvent(_controller.text));
+                                bloc.add(LoadWeatherEvent(_controller.text));
                               },
                               child: const Text('Search'),
                             ),

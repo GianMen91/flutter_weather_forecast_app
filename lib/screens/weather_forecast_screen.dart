@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_forecast_app/bloc/weather_bloc.dart';
 import 'package:flutter_weather_forecast_app/bloc/weather_state.dart';
-import 'package:flutter_weather_forecast_app/screens/search_screen.dart';
+import 'package:flutter_weather_forecast_app/widgets/search_widget.dart';
 
 import '../widgets/weather_widget.dart';
 
@@ -32,7 +32,7 @@ class WeatherForecastScreen extends StatelessWidget {
     if (state.weatherForecast.isNotEmpty) {
       return WeatherWidget(listOfWeatherForecast: state.weatherForecast, cityName: state.currentCityName);
     } else {
-      return SearchScreen(bloc: bloc);
+      return SearchWidget(bloc: bloc);
     }
   }
 }

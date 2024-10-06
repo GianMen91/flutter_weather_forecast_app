@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_forecast_app/widgets/today_forecast.dart';
+import 'package:flutter_weather_forecast_app/widgets/today_forecast_widget.dart';
 import '../models/weather.dart';
-import 'next_days_forecasts.dart';
+import 'next_days_forecasts_widget.dart';
 
 class WeatherWidget extends StatelessWidget {
   const WeatherWidget({super.key, required this.listOfWeatherForecast, required this.cityName});
@@ -33,7 +33,7 @@ class WeatherWidget extends StatelessWidget {
 
             const SizedBox(height: 20),
             // Today Forecast
-            Center(child: TodayForecast(listOfWeatherForecast: listOfWeatherForecast)),
+            Center(child: TodayForecastWidget(listOfWeatherForecast: listOfWeatherForecast)),
 
             const SizedBox(height: 20),
 
@@ -48,7 +48,7 @@ class WeatherWidget extends StatelessWidget {
               child: Row(
                 children: List.generate(
                   listOfWeatherForecast.length - 1,
-                  (index) => NextDaysForecast(
+                  (index) => NextDaysForecastWidget(
                     listOfWeatherForecast: listOfWeatherForecast[index + 1],
                   ),
                 ),

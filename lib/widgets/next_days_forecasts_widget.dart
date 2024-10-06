@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/weather.dart';
 
-class NextDaysForecast extends StatelessWidget {
-  const NextDaysForecast({
+class NextDaysForecastWidget extends StatelessWidget {
+  const NextDaysForecastWidget({
     super.key,
     required this.listOfWeatherForecast,
   });
