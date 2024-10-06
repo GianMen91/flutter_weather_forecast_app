@@ -16,6 +16,9 @@ This project utilizes the [OpenWeatherMap API](https://openweathermap.org/api) t
 * **Error Handling**: Displays an error screen with a retry button if data fetching fails.
 * **Responsive Design**: Supports both horizontal and vertical layouts for an optimized user experience across different screen sizes.
 
+## Content Attribution
+The Lottie files used to display weather icons and animations within the app were downloaded from https://lottiefiles.com/
+
 ## Technologies Used
 * **Flutter**: Framework for building high-quality, natively compiled applications for mobile, web, and desktop from a single codebase.
 * **Dart**: Programming language used to write Flutter applications.
