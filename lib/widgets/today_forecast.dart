@@ -25,16 +25,25 @@ class TodayForecast extends StatelessWidget {
               fontWeight: FontWeight.w500,
             )),
         const SizedBox(height: 10),
-        Card(
-            child: Column(
+        Text(listOfWeatherForecast[0].weatherCondition.name,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+            )),
+        const SizedBox(height: 10),
+        Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Icon(Icons.sunny, size: 100),
-            Text(listOfWeatherForecast[0].date),
-            Text('Temperatyre:${listOfWeatherForecast[0].temperature} °C'),
+            Text(
+              '${listOfWeatherForecast[0].temperature.toInt()} °',
+              style: const TextStyle(fontSize: 30),
+            ),
+            Text('Humidity:${listOfWeatherForecast[0].humidity.toInt()} %'),
+            Text('Pressure:${listOfWeatherForecast[0].pressure.toInt()} hPa'),
+            Text('Wind:${listOfWeatherForecast[0].wind} Km/h'),
           ],
-        )),
+        ),
         const SizedBox(height: 10),
       ],
     );
