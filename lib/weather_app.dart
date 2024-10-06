@@ -1,39 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_weather_forecast_app/bloc/weather_bloc.dart';
-import 'package:flutter_weather_forecast_app/bloc/weather_event.dart';
 import 'package:flutter_weather_forecast_app/presentation/weather_app_main_screen.dart';
-import 'package:go_router/go_router.dart';
-
-import 'module/module.dart';
+import 'package:flutter_weather_forecast_app/bloc/weather_bloc.dart';
+import 'package:flutter_weather_forecast_app/network/open_weather_api_call.dart';
 
 class WeatherApp extends StatelessWidget {
-  const WeatherApp({super.key, required this.module});
-
-  final Module module;
-
-  GoRouter getRouter(Module module) {
-    return GoRouter(routes: [
-      GoRoute(
-          path: '/',
-          builder: (context, state) => BlocProvider(
-                create: (context) => WeatherBloc()..add(CheckLocationPermissionEvent()),
-                child: const WeatherAppMainScreen(),
-              ))
-    ]);
-  }
+  const WeatherApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Create an instance of OpenWeatherApiCall
+    final openWeatherApiCall = OpenWeatherApiCall();
 
-    var router = getRouter(module);
-
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerDelegate: router.routerDelegate,
-      routeInformationParser: router.routeInformationParser,
-      routeInformationProvider: router.routeInformationProvider,
+    return BlocProvider(
+      create: (context) => WeatherBloc(openWeatherApiCall: openWeatherApiCall), // Pass the OpenWeatherApiCall instance
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: WeatherAppMainScreen(),
+      ),
     );
   }
 }
