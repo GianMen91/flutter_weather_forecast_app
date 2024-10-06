@@ -17,6 +17,14 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       : super(const WeatherState()) {
     on<AskForLocationPermissionEvent>(_askForLocationPermissionEvent);
     on<LoadWeatherEvent>(_loadWeatherEvent);
+    on<ClearWeatherForecastEvent>(_clearWeatherForecastEvent);
+  }
+
+  FutureOr<void> _clearWeatherForecastEvent(
+      ClearWeatherForecastEvent event,
+      Emitter<WeatherState> emit,
+      ) {
+    emit(state.copyWith(weatherForecast: []));
   }
 
 

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_forecast_app/widgets/today_forecast_widget.dart';
+import '../bloc/weather_bloc.dart';
+import '../bloc/weather_event.dart';
 import '../models/weather.dart';
 import 'next_days_forecasts_widget.dart';
 
@@ -12,7 +15,7 @@ class WeatherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return  SafeArea(
         child: Center(
             // Use Center to center the SingleChildScrollView
             child: SingleChildScrollView(
@@ -48,7 +51,8 @@ class WeatherWidget extends StatelessWidget {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    // Handle back button press
+                    BlocProvider.of<WeatherBloc>(context)
+                        .add(ClearWeatherForecastEvent());
                   },
                 ),
               ],

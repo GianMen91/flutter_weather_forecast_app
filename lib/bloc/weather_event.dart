@@ -15,3 +15,5 @@ class LoadWeatherEvent extends WeatherEvent {
 }
 
 class AskForLocationPermissionEvent extends WeatherEvent {}
+
+class ClearWeatherForecastEvent extends WeatherEvent {}
