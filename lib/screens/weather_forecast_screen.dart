@@ -68,9 +68,14 @@ class WeatherForecastScreen extends StatelessWidget {
     }
 
     if (state.weatherForecast.isNotEmpty) {
-      return WeatherWidget(
-          listOfWeatherForecast: state.weatherForecast,
-          cityName: state.currentCityName);
+      return  RefreshIndicator(
+        onRefresh: () async {
+          bloc.add(LoadWeatherEvent(state.currentCityName));
+        },
+        child: WeatherWidget(
+            listOfWeatherForecast: state.weatherForecast,
+            cityName: state.currentCityName),
+      );
     } else {
       return SearchWidget(bloc: bloc);
     }
