@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_weather_forecast_app/bloc/weather_bloc.dart';
-import 'package:flutter_weather_forecast_app/bloc/weather_event.dart';
 import 'package:flutter_weather_forecast_app/repository/weather_repository.dart';
 import 'package:flutter_weather_forecast_app/widgets/weather_search_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mockito/mockito.dart';
-import 'package:flutter_weather_forecast_app/models/weather.dart';
 
 // Create a mock class for the WeatherRepository
 class MockWeatherRepository extends Mock implements WeatherRepository {}
