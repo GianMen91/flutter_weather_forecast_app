@@ -36,7 +36,6 @@ The Lottie files used to display weather icons and animations within the app wer
 * **Widget Testing**: Comprehensive widget tests ensure the stability and reliability of UI components.
 
 ## Responsiveness
-
 The application is designed to provide a consistent and enjoyable experience across various screen sizes, from small mobile devices to large tablets. Whether in portrait or landscape mode, the app adapts seamlessly to offer an intuitive and engaging user interface.
 
 ## API Connection
