@@ -26,7 +26,7 @@ class TodayForecastWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(width: 60),
+            const SizedBox(width: 40),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               // Aligns children to the start
