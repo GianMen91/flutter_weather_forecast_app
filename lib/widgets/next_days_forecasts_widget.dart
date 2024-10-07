@@ -30,8 +30,6 @@ class NextDaysForecastWidget extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.3),
-          // White background with 50% opacity
-          // Removed border to eliminate the black outline
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
@@ -39,7 +37,7 @@ class NextDaysForecastWidget extends StatelessWidget {
           children: [
             Text(
               DateFormat('EEE').format(DateTime.parse(weatherForecast.date)),
-              style:  TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Colors.white,
                 fontSize: size.width > 600 ? 23 : 15,
@@ -47,11 +45,15 @@ class NextDaysForecastWidget extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             WeatherImageWidget(
-                weatherConditionName: weatherForecast.weatherCondition.name),
+              weatherConditionName: weatherForecast.weatherCondition.name,
+            ),
             const SizedBox(height: 10),
             Text(
               '${weatherForecast.tempMin.toInt()}° / ${weatherForecast.tempMax.toInt()}°',
-              style: TextStyle(color: Colors.white,fontSize: size.width > 600 ? 23 : 15),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: size.width > 600 ? 23 : 15,
+              ),
             ),
           ],
         ),
