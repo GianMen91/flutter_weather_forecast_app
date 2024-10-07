@@ -48,14 +48,14 @@ class WeatherForecastView extends StatelessWidget {
       );
     }
 
-    if (state.forecastData.isNotEmpty) {
+    if (state.weatherForecast.isNotEmpty) {
       return RefreshIndicator(
         onRefresh: () async {
           weatherBloc.add(FetchWeatherEvent(state.currentCityName));
         },
         child: WeatherWidget(
           selectedDateString: state.selectedDate,
-          weatherForecasts: state.forecastData,
+          weatherForecasts: state.weatherForecast,
           cityName: state.currentCityName,
         ),
       );

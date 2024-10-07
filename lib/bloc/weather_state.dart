@@ -4,13 +4,13 @@ import '../models/weather.dart';
 
 class WeatherState extends Equatable {
   final bool isLoading;
-  final List<Weather> forecastData;
+  final List<Weather> weatherForecast;
   final String currentCityName;
   final String? errorMessage;
   final String selectedDate;
 
   const WeatherState({
-    this.forecastData = const [],
+    this.weatherForecast = const [],
     this.currentCityName = "",
     this.isLoading = false,
     this.errorMessage,
@@ -19,7 +19,7 @@ class WeatherState extends Equatable {
 
   @override
   List<Object?> get props =>
-      [forecastData, isLoading, currentCityName, errorMessage, selectedDate];
+      [weatherForecast, isLoading, currentCityName, errorMessage, selectedDate];
 
   WeatherState copyWith({
     List<Weather>? weatherForecast,
@@ -29,7 +29,7 @@ class WeatherState extends Equatable {
     String? selectedDate,
   }) {
     return WeatherState(
-        forecastData: weatherForecast ?? forecastData,
+        weatherForecast: weatherForecast ?? this.weatherForecast,
         currentCityName: currentCityName ?? this.currentCityName,
         isLoading: isLoading ?? this.isLoading,
         errorMessage: errorMessage,
