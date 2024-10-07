@@ -72,7 +72,7 @@ class WeatherWidget extends StatelessWidget {
                   ),
                   onPressed: () {
                     BlocProvider.of<WeatherBloc>(context)
-                        .add(ClearWeatherForecastEvent());
+                        .add(ResetWeatherForecastEvent());
                   },
                 ),
               ],

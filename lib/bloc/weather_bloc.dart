@@ -15,29 +15,29 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 
   WeatherBloc({required this.openWeatherApiCall})
       : super(const WeatherState()) {
-    on<AskForLocationPermissionEvent>(_askForLocationPermissionEvent);
-    on<LoadWeatherEvent>(_loadWeatherEvent);
-    on<ClearWeatherForecastEvent>(_clearWeatherForecastEvent);
-    on<UpdateSelectedDateEvent>(_updateSelectedDateEvent);
+    on<RequestLocationPermissionEvent>(_onRequestLocationPermission);
+    on<FetchWeatherEvent>(_onFetchWeather);
+    on<ResetWeatherForecastEvent>(_onResetWeatherForecast);
+    on<SelectDateEvent>(_onSelectDate);
   }
 
-  FutureOr<void> _clearWeatherForecastEvent(
-    ClearWeatherForecastEvent event,
+  FutureOr<void> _onResetWeatherForecast(
+    ResetWeatherForecastEvent event,
     Emitter<WeatherState> emit,
   ) {
     emit(state
         .copyWith(weatherForecast: [], currentCityName: "", selectedDate: ""));
   }
 
-  FutureOr<void> _updateSelectedDateEvent(
-    UpdateSelectedDateEvent event,
+  FutureOr<void> _onSelectDate(
+    SelectDateEvent event,
     Emitter<WeatherState> emit,
   ) {
     emit(state.copyWith(selectedDate: event.date));
   }
 
-  FutureOr<void> _askForLocationPermissionEvent(
-    AskForLocationPermissionEvent event,
+  FutureOr<void> _onRequestLocationPermission(
+    RequestLocationPermissionEvent event,
     Emitter<WeatherState> emit,
   ) async {
     var status = await Permission.location.request();
@@ -48,7 +48,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
           desiredAccuracy: LocationAccuracy.high);
 
       // Fetch the city name using the location coordinates
-      String cityName = await _getCityNameFromCoordinates(
+      String cityName = await _fetchCityNameFromCoordinates(
           position.latitude, position.longitude);
 
       // Update the state with the city name, but don't call the API
@@ -56,8 +56,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     }
   }
 
-  FutureOr<void> _loadWeatherEvent(
-    LoadWeatherEvent event,
+  FutureOr<void> _onFetchWeather(
+    FetchWeatherEvent event,
     Emitter<WeatherState> emit,
   ) async {
     emit(state.copyWith(isLoading: true)); // Reset error message
@@ -91,7 +91,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     }
   }
 
-  Future<String> _getCityNameFromCoordinates(
+  Future<String> _fetchCityNameFromCoordinates(
       double latitude, double longitude) async {
     // Use a geocoding service to get the city name from the coordinates
     List<Placemark> placemarks =

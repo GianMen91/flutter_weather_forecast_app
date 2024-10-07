@@ -54,10 +54,10 @@ class ErrorMessageWidget extends StatelessWidget {
                   // Retry fetching the weather data
                   if (currentCityName.isNotEmpty) {
                     BlocProvider.of<WeatherBloc>(context)
-                        .add(LoadWeatherEvent(currentCityName));
+                        .add(FetchWeatherEvent(currentCityName));
                   } else {
                     BlocProvider.of<WeatherBloc>(context)
-                        .add(ClearWeatherForecastEvent());
+                        .add(ResetWeatherForecastEvent());
                   }
                 },
                 child:  Text('Retry',

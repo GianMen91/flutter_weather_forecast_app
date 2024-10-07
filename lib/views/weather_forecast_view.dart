@@ -27,7 +27,7 @@ class WeatherForecastView extends StatelessWidget {
   }
 
   Future<bool> _handleBackNavigation(BuildContext context) async {
-    BlocProvider.of<WeatherBloc>(context).add(ClearWeatherForecastEvent());
+    BlocProvider.of<WeatherBloc>(context).add(ResetWeatherForecastEvent());
     return false;
   }
 
@@ -48,14 +48,14 @@ class WeatherForecastView extends StatelessWidget {
       );
     }
 
-    if (state.weatherForecast.isNotEmpty) {
+    if (state.forecastData.isNotEmpty) {
       return RefreshIndicator(
         onRefresh: () async {
-          weatherBloc.add(LoadWeatherEvent(state.currentCityName));
+          weatherBloc.add(FetchWeatherEvent(state.currentCityName));
         },
         child: WeatherWidget(
           selectedDate: state.selectedDate,
-          listOfWeatherForecast: state.weatherForecast,
+          listOfWeatherForecast: state.forecastData,
           cityName: state.currentCityName,
         ),
       );

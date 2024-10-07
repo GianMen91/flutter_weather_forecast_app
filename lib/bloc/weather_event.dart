@@ -5,21 +5,21 @@ abstract class WeatherEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadWeatherEvent extends WeatherEvent {
+class FetchWeatherEvent extends WeatherEvent {
   final String city;
 
-  LoadWeatherEvent(this.city);
+  FetchWeatherEvent(this.city);
 
   @override
   List<Object> get props => [city];
 }
 
-class AskForLocationPermissionEvent extends WeatherEvent {}
+class RequestLocationPermissionEvent extends WeatherEvent {}
 
-class ClearWeatherForecastEvent extends WeatherEvent {}
+class ResetWeatherForecastEvent extends WeatherEvent {}
 
-class UpdateSelectedDateEvent extends WeatherEvent {
+class SelectDateEvent extends WeatherEvent {
   final String date;
 
-  UpdateSelectedDateEvent(this.date);
+  SelectDateEvent(this.date);
 }

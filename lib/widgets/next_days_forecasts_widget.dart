@@ -22,7 +22,7 @@ class NextDaysForecastWidget extends StatelessWidget {
       onTap: () {
         // Dispatch an event to update the selected date
         BlocProvider.of<WeatherBloc>(context)
-            .add(UpdateSelectedDateEvent(weatherForecast.date));
+            .add(SelectDateEvent(weatherForecast.date));
       },
       child: Container(
         width: size.width > 600 ? 200 : 100,

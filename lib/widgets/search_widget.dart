@@ -86,7 +86,7 @@ class SearchWidget extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     // Request location permission and update city name
-                                    bloc.add(AskForLocationPermissionEvent());
+                                    bloc.add(RequestLocationPermissionEvent());
                                   },
                                 ),
                               ),
@@ -115,7 +115,7 @@ class SearchWidget extends StatelessWidget {
                               ),
                               onPressed: () {
                                 // Trigger the API call with the entered city name
-                                bloc.add(LoadWeatherEvent(_controller.text));
+                                bloc.add(FetchWeatherEvent(_controller.text));
                               },
                               child:  Text('Check Weather Forecast',
                                 style:  TextStyle(fontSize: size.width > 600 ? 18 : 16),
