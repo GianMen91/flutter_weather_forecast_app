@@ -8,30 +8,31 @@ import '../bloc/weather_event.dart';
 import '../widgets/error_message_widget.dart';
 import '../widgets/weather_widget.dart';
 
-class WeatherForecastScreen extends StatelessWidget {
-  const WeatherForecastScreen({super.key});
+class WeatherForecastView extends StatelessWidget {
+  const WeatherForecastView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<WeatherBloc>(context);
+    final weatherBloc = BlocProvider.of<WeatherBloc>(context);
     return BlocBuilder<WeatherBloc, WeatherState>(builder: (context, state) {
       // ignore: deprecated_member_use
       return WillPopScope(
-        onWillPop: () => _onWillPop(context),
+        onWillPop: () => _handleBackNavigation(context),
         child: Scaffold(
           backgroundColor: const Color(0xFF63C4FD),
-          body: _getWidgetDependingByPermission(state, bloc),
+          body: _buildContentForWeatherState(state, weatherBloc),
         ),
       );
     });
   }
 
-  Future<bool> _onWillPop(BuildContext context) async {
+  Future<bool> _handleBackNavigation(BuildContext context) async {
     BlocProvider.of<WeatherBloc>(context).add(ClearWeatherForecastEvent());
     return false;
   }
 
-  Widget _getWidgetDependingByPermission(WeatherState state, WeatherBloc bloc) {
+  Widget _buildContentForWeatherState(
+      WeatherState state, WeatherBloc weatherBloc) {
     if (state.isLoading) {
       return const Center(
         child: CircularProgressIndicator(
@@ -42,22 +43,24 @@ class WeatherForecastScreen extends StatelessWidget {
 
     if (state.errorMessage != null) {
       return ErrorMessageWidget(
-          errorMessage: state.errorMessage!,
-          currentCityName: state.currentCityName);
+        errorMessage: state.errorMessage!,
+        currentCityName: state.currentCityName,
+      );
     }
 
     if (state.weatherForecast.isNotEmpty) {
       return RefreshIndicator(
         onRefresh: () async {
-          bloc.add(LoadWeatherEvent(state.currentCityName));
+          weatherBloc.add(LoadWeatherEvent(state.currentCityName));
         },
         child: WeatherWidget(
-            selectedDate: state.selectedDate,
-            listOfWeatherForecast: state.weatherForecast,
-            cityName: state.currentCityName),
+          selectedDate: state.selectedDate,
+          listOfWeatherForecast: state.weatherForecast,
+          cityName: state.currentCityName,
+        ),
       );
     } else {
-      return SearchWidget(bloc: bloc);
+      return SearchWidget(bloc: weatherBloc);
     }
   }
 }
