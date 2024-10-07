@@ -7,6 +7,10 @@ This project utilizes the [OpenWeatherMap API](https://openweathermap.org/api) t
 
 ## Screenshots
 
+<img src="img/img-1.png" width=300 /> <img src="img/img-2.png" width=300 /> 
+
+<img src="img/img-3.png" width=300 /> 
+
 ## Features
 * **Loading Indicator**: Displays a loading animation while fetching weather data.
 * **Weather List**: Shows a list of daily weather summaries, each containing the day of the week, weather condition icon, and a brief description.
