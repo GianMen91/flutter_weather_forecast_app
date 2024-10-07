@@ -16,6 +16,8 @@ class NextDaysForecastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
     return GestureDetector(
       onTap: () {
         // Dispatch an event to update the selected date
@@ -23,7 +25,7 @@ class NextDaysForecastWidget extends StatelessWidget {
             .add(UpdateSelectedDateEvent(weatherForecast.date));
       },
       child: Container(
-        width: 100,
+        width: size.width > 600 ? 200 : 100,
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         padding: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
@@ -37,9 +39,10 @@ class NextDaysForecastWidget extends StatelessWidget {
           children: [
             Text(
               DateFormat('EEE').format(DateTime.parse(weatherForecast.date)),
-              style: const TextStyle(
+              style:  TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Colors.white,
+                fontSize: size.width > 600 ? 23 : 15,
               ),
             ),
             const SizedBox(height: 10),
@@ -48,7 +51,7 @@ class NextDaysForecastWidget extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               '${weatherForecast.tempMin.toInt()}° / ${weatherForecast.tempMax.toInt()}°',
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: size.width > 600 ? 23 : 15),
             ),
           ],
         ),
