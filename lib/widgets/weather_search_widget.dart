@@ -6,33 +6,34 @@ import 'package:flutter_weather_forecast_app/bloc/weather_state.dart';
 import 'package:lottie/lottie.dart';
 
 class WeatherSearchWidget extends StatelessWidget {
-  WeatherSearchWidget({required this.weatherBloc, super.key});
+  WeatherSearchWidget({
+    required this.weatherBloc, // Bloc for managing weather state
+    super.key,
+  });
 
-  final WeatherBloc weatherBloc;
+  final WeatherBloc weatherBloc; // Bloc instance
 
   final TextEditingController _cityTextEditingController =
-      TextEditingController();
+  TextEditingController(); // Controller for the city text field
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size; // Get the screen size
 
     return Center(
-      // Use Center to center the SingleChildScrollView
       child: SingleChildScrollView(
         child: ConstrainedBox(
-          // Use ConstrainedBox to limit the width of the child elements
           constraints: BoxConstraints(
-            maxWidth: size.width * 0.8,
+            maxWidth: size.width * 0.8, // Limit the width to 80% of the screen
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min, // Minimize the size of the column
             children: <Widget>[
               SizedBox(
-                width: size.width > 600 ? 200 : 300,
+                width: size.width > 600 ? 200 : 300, // Adjust size based on screen width
                 child: Center(
-                  child: Lottie.asset('assets/world.json'),
+                  child: Lottie.asset('assets/world.json'), // Animation asset
                 ),
               ),
               SizedBox(height: size.width > 600 ? 20 : 30),
@@ -50,10 +51,9 @@ class WeatherSearchWidget extends StatelessWidget {
                           margin: const EdgeInsets.all(5.0),
                           height: 50.0,
                           child: TextField(
-                            controller: _cityTextEditingController,
+                            controller: _cityTextEditingController, // Use controller for input
                             style: const TextStyle(
-                              color:
-                                  Colors.white, // Set the text color to white
+                              color: Colors.white, // Set text color to white
                             ),
                             decoration: InputDecoration(
                               prefixIcon: const Icon(
@@ -61,20 +61,14 @@ class WeatherSearchWidget extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               enabledBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white), // Set the border color to white
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                borderSide: BorderSide(color: Colors.white), // Border color
                               ),
                               focusedBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(
-                                    color: Colors
-                                        .white), // Border color when focused
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                borderSide: BorderSide(color: Colors.white), // Border color when focused
                               ),
-                              hintText: "City Name",
+                              hintText: "City Name", // Hint text
                               hintStyle: const TextStyle(color: Colors.white),
                               suffixIcon: IconButton(
                                 icon: const Icon(
@@ -83,8 +77,7 @@ class WeatherSearchWidget extends StatelessWidget {
                                 ),
                                 onPressed: () {
                                   // Request location permission and update city name
-                                  weatherBloc
-                                      .add(RequestLocationPermissionEvent());
+                                  weatherBloc.add(RequestLocationPermissionEvent());
                                 },
                               ),
                             ),
@@ -94,16 +87,12 @@ class WeatherSearchWidget extends StatelessWidget {
                         Container(
                           margin: const EdgeInsets.all(5.0),
                           height: 50.0,
-                          width: double.infinity,
-                          // Take the full width within the constraints
+                          width: double.infinity, // Full width within constraints
                           child: ElevatedButton(
                             style: ButtonStyle(
-                              foregroundColor:
-                                  MaterialStateProperty.all<Color>(Colors.blue),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.white),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -116,8 +105,7 @@ class WeatherSearchWidget extends StatelessWidget {
                             },
                             child: Text(
                               'Check Weather Forecast',
-                              style: TextStyle(
-                                  fontSize: size.width > 600 ? 18 : 16),
+                              style: TextStyle(fontSize: size.width > 600 ? 18 : 16),
                             ),
                           ),
                         ),
