@@ -112,7 +112,7 @@ class WeatherSearchWidget extends StatelessWidget {
                             onPressed: () {
                               // Trigger the API call with the entered city name
                               weatherBloc.add(FetchWeatherEvent(
-                                  _cityTextEditingController.text));
+                                  _cityTextEditingController.text.toLowerCase().trim()));
                             },
                             child: Text(
                               'Check Weather Forecast',
