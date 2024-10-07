@@ -51,6 +51,7 @@ class WeatherForecastScreen extends StatelessWidget {
           bloc.add(LoadWeatherEvent(state.currentCityName));
         },
         child: WeatherWidget(
+            selectedDate: state.selectedDate,
             listOfWeatherForecast: state.weatherForecast,
             cityName: state.currentCityName),
       );

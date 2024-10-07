@@ -18,6 +18,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     on<AskForLocationPermissionEvent>(_askForLocationPermissionEvent);
     on<LoadWeatherEvent>(_loadWeatherEvent);
     on<ClearWeatherForecastEvent>(_clearWeatherForecastEvent);
+    on<UpdateSelectedDateEvent>(_updateSelectedDateEvent);
   }
 
   FutureOr<void> _clearWeatherForecastEvent(
@@ -26,6 +27,14 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       ) {
     emit(state.copyWith(weatherForecast: [],currentCityName: ""));
   }
+
+  FutureOr<void> _updateSelectedDateEvent(
+      UpdateSelectedDateEvent event,
+      Emitter<WeatherState> emit,
+      ) {
+    emit(state.copyWith(selectedDate: event.date));
+  }
+
 
 
   FutureOr<void> _askForLocationPermissionEvent(

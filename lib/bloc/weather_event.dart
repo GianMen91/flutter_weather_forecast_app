@@ -17,3 +17,9 @@ class LoadWeatherEvent extends WeatherEvent {
 class AskForLocationPermissionEvent extends WeatherEvent {}
 
 class ClearWeatherForecastEvent extends WeatherEvent {}
+
+class UpdateSelectedDateEvent extends WeatherEvent {
+  final String date;
+
+  UpdateSelectedDateEvent(this.date);
+}

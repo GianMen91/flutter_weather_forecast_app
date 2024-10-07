@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_forecast_app/widgets/today_forecast_widget.dart';
+import 'package:intl/intl.dart';
 import '../bloc/weather_bloc.dart';
 import '../bloc/weather_event.dart';
 import '../models/weather.dart';
@@ -8,14 +9,28 @@ import 'next_days_forecasts_widget.dart';
 
 class WeatherWidget extends StatelessWidget {
   const WeatherWidget(
-      {super.key, required this.listOfWeatherForecast, required this.cityName});
+      {super.key,
+      required this.listOfWeatherForecast,
+      required this.cityName,
+      required this.selectedDate});
 
   final List<Weather> listOfWeatherForecast;
   final String cityName;
+  final String selectedDate;
 
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
+    final selectedWeather;
+
+    if (selectedDate.isNotEmpty) {
+      selectedWeather = listOfWeatherForecast
+          .firstWhere((weather) => weather.date == selectedDate);
+    } else {
+      selectedWeather = listOfWeatherForecast.firstWhere((weather) =>
+          weather.date == DateFormat('yyyy-MM-dd').format(DateTime.now()));
+    }
+
+    return SafeArea(
         child: Center(
             // Use Center to center the SingleChildScrollView
             child: SingleChildScrollView(
@@ -34,7 +49,8 @@ class WeatherWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.location_on, color: Colors.white, size: 24),
+                    const Icon(Icons.location_on,
+                        color: Colors.white, size: 24),
                     const SizedBox(width: 10),
                     Text(
                       cityName.toUpperCase(),
@@ -62,7 +78,7 @@ class WeatherWidget extends StatelessWidget {
             const SizedBox(height: 20),
             Center(
                 child: TodayForecastWidget(
-                    listOfWeatherForecast: listOfWeatherForecast)),
+                    listOfWeatherForecast: [selectedWeather])),
             const SizedBox(height: 20),
 
             // Next Days Forecast - Display horizontally in a row
