@@ -63,7 +63,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       LoadWeatherEvent event,
       Emitter<WeatherState> emit,
       ) async {
-    emit(state.copyWith(isLoading: true, errorMessage: null)); // Reset error message
+    emit(state.copyWith(isLoading: true)); // Reset error message
 
     try {
       // Use the provided city name to load the weather forecast

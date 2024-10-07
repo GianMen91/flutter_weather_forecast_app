@@ -20,7 +20,7 @@ class WeatherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedWeather;
+    final Weather selectedWeather;
 
     if (selectedDate.isNotEmpty) {
       selectedWeather = listOfWeatherForecast

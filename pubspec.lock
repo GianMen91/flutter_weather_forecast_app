@@ -208,14 +208,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.3"
-  go_router:
-    dependency: "direct main"
-    description:
-      name: go_router
-      sha256: "6f1b756f6e863259a99135ff3c95026c3cdca17d10ebef2bba2261a25ddc8bbc"
-      url: "https://pub.dev"
-    source: hosted
-    version: "14.3.0"
   http:
     dependency: "direct main"
     description:
@@ -272,14 +264,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
-  logging:
-    dependency: transitive
-    description:
-      name: logging
-      sha256: "623a88c9594aa774443aa3eb2d41807a48486b5613e67599fb4c41c0ad47c340"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0"
   lottie:
     dependency: "direct main"
     description:
@@ -495,4 +479,4 @@ packages:
     version: "0.5.1"
 sdks:
   dart: ">=3.3.4 <4.0.0"
-  flutter: ">=3.19.0"
+  flutter: ">=3.16.0"

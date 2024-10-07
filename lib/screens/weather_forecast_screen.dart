@@ -15,6 +15,7 @@ class WeatherForecastScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<WeatherBloc>(context);
     return BlocBuilder<WeatherBloc, WeatherState>(builder: (context, state) {
+      // ignore: deprecated_member_use
       return WillPopScope(
         onWillPop: () => _onWillPop(context),
         child: Scaffold(
