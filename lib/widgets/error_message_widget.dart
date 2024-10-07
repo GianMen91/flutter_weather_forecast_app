@@ -13,6 +13,9 @@ class ErrorMessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final Size size = MediaQuery.of(context).size;
+
     return Center(
       child: ConstrainedBox(
         // Use ConstrainedBox to limit the width of the child elements
@@ -26,10 +29,10 @@ class ErrorMessageWidget extends StatelessWidget {
           children: [
             Text(
               errorMessage,
-              style: const TextStyle(color: Colors.white, fontSize: 18),
+              style:  TextStyle(color: Colors.white,  fontSize: size.width > 600 ? 30 : 18),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 30),
+            SizedBox(height: size.width > 600 ? 40 : 30),
             Container(
               margin: const EdgeInsets.all(5.0),
               height: 50.0,
@@ -57,7 +60,9 @@ class ErrorMessageWidget extends StatelessWidget {
                         .add(ClearWeatherForecastEvent());
                   }
                 },
-                child: const Text('Retry'),
+                child:  Text('Retry',
+                    style:  TextStyle(fontSize: size.width > 600 ? 18 : 16),
+                ),
               ),
             ),
           ],

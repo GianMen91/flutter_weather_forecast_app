@@ -117,7 +117,9 @@ class SearchWidget extends StatelessWidget {
                                 // Trigger the API call with the entered city name
                                 bloc.add(LoadWeatherEvent(_controller.text));
                               },
-                              child: const Text('Check Weather Forecast'),
+                              child:  Text('Check Weather Forecast',
+                                style:  TextStyle(fontSize: size.width > 600 ? 18 : 16),
+                              ),
                             ),
                           ),
                         ],
