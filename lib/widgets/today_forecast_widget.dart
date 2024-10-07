@@ -13,6 +13,9 @@ class TodayForecastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final Size size = MediaQuery.of(context).size;
+
     return Column(
       children: [
         const SizedBox(height: 10),
@@ -75,17 +78,17 @@ class TodayForecastWidget extends StatelessWidget {
                 alignment: Alignment.centerLeft, // Align to left
                 child: Text(
                     'Humidity: ${listOfWeatherForecast[0].humidity.toInt()} %',
-                    style: const TextStyle(color: Colors.white, fontSize: 15))),
+                    style:  TextStyle(color: Colors.white,  fontSize: size.width > 600 ? 25 : 15))),
             Container(
                 alignment: Alignment.centerLeft, // Align to left
                 child: Text(
                     'Pressure: ${listOfWeatherForecast[0].pressure.toInt()} hPa',
-                    style: const TextStyle(color: Colors.white, fontSize: 15))),
+                    style:  TextStyle(color: Colors.white,  fontSize: size.width > 600 ? 25 : 15))),
             Container(
                 alignment: Alignment.centerLeft, // Align to left
                 child: Text(
                     'Wind: ${listOfWeatherForecast[0].wind.toInt()} Km/h',
-                    style: const TextStyle(color: Colors.white, fontSize: 15))),
+                    style:  TextStyle(color: Colors.white,  fontSize: size.width > 600 ? 25 : 15))),
           ],
         ),
       ],
