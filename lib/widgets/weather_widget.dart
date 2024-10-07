@@ -22,6 +22,8 @@ class WeatherWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final Weather selectedWeather;
 
+    final Size size = MediaQuery.of(context).size;
+
     if (selectedDate.isNotEmpty) {
       selectedWeather = listOfWeatherForecast
           .firstWhere((weather) => weather.date == selectedDate);
@@ -43,19 +45,19 @@ class WeatherWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 10),
+            SizedBox(height: size.width > 600 ? 5 : 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.location_on,
-                        color: Colors.white, size: 24),
+                    Icon(Icons.location_on,
+                        color: Colors.white, size: size.width > 600 ? 38 : 25),
                     const SizedBox(width: 10),
                     Text(
                       cityName.toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 24,
+                      style:  TextStyle(
+                        fontSize: size.width > 600 ? 38 : 25,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -63,10 +65,10 @@ class WeatherWidget extends StatelessWidget {
                   ],
                 ),
                 IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_back_rounded,
                     color: Colors.white,
-                    size: 24,
+                      size: size.width > 600 ? 38 : 25
                   ),
                   onPressed: () {
                     BlocProvider.of<WeatherBloc>(context)
@@ -75,21 +77,20 @@ class WeatherWidget extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: size.width > 600 ? 30 : 20),
             Center(
                 child: TodayForecastWidget(
                     listOfWeatherForecast: [selectedWeather])),
-            const SizedBox(height: 20),
-
+            SizedBox(height: size.width > 600 ? 30 : 20),
             // Next Days Forecast - Display horizontally in a row
-            const Text(
+            Text(
               'Weekly Weather Forecast',
               style: TextStyle(
-                  fontSize: 18,
+                  fontSize: size.width > 600 ? 38 : 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             ),
-            const SizedBox(height: 40),
+            SizedBox(height: size.width > 600 ? 60 : 40),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
