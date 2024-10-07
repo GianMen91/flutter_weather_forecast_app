@@ -10,7 +10,8 @@ class WeatherSearchWidget extends StatelessWidget {
 
   final WeatherBloc weatherBloc;
 
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _cityTextEditingController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class WeatherSearchWidget extends StatelessWidget {
                 builder: (context, state) {
                   // Populate the text field with the current city name if available
                   if (state.currentCityName.isNotEmpty) {
-                    _controller.text = state.currentCityName;
+                    _cityTextEditingController.text = state.currentCityName;
                   }
                   return Container(
                     padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -49,7 +50,7 @@ class WeatherSearchWidget extends StatelessWidget {
                           margin: const EdgeInsets.all(5.0),
                           height: 50.0,
                           child: TextField(
-                            controller: _controller,
+                            controller: _cityTextEditingController,
                             style: const TextStyle(
                               color:
                                   Colors.white, // Set the text color to white
@@ -110,8 +111,8 @@ class WeatherSearchWidget extends StatelessWidget {
                             ),
                             onPressed: () {
                               // Trigger the API call with the entered city name
-                              weatherBloc
-                                  .add(FetchWeatherEvent(_controller.text));
+                              weatherBloc.add(FetchWeatherEvent(
+                                  _cityTextEditingController.text));
                             },
                             child: Text(
                               'Check Weather Forecast',
