@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_weather_forecast_app/widgets/weather_image_widget.dart';
+import 'package:flutter_weather_forecast_app/widgets/weather_animation_widget.dart';
 import 'package:intl/intl.dart';
 import '../bloc/weather_bloc.dart';
 import '../bloc/weather_event.dart';
@@ -44,7 +44,7 @@ class NextDaysForecastWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            WeatherImageWidget(
+            WeatherAnimationWidget(
               weatherConditionName: weatherForecast.weatherCondition.name,
             ),
             const SizedBox(height: 10),

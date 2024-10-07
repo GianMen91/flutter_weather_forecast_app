@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class WeatherImageWidget extends StatelessWidget {
-  const WeatherImageWidget({super.key, required this.weatherConditionName});
+class WeatherAnimationWidget extends StatelessWidget {
+  const WeatherAnimationWidget({super.key, required this.weatherConditionName});
 
   final String weatherConditionName;
 
   @override
   Widget build(BuildContext context) {
-    return Lottie.asset(getAnimation(weatherConditionName));
+    return Lottie.asset(getAnimationPath(weatherConditionName));
   }
 
-  String getAnimation(String? weatherConditionName) {
+  String getAnimationPath(String? weatherConditionName) {
     if (weatherConditionName == null) return 'assets/sunny.json';
 
     switch (weatherConditionName.toLowerCase()) {

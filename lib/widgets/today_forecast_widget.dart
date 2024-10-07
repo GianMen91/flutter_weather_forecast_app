@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_forecast_app/widgets/weather_image_widget.dart';
+import 'package:flutter_weather_forecast_app/widgets/weather_animation_widget.dart';
 import 'package:intl/intl.dart';
 import '../models/weather.dart';
 
@@ -62,11 +62,10 @@ class TodayForecastWidget extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 30),
-        // Placeholder for weather icon (can use network image or custom icon)
         SizedBox(
           width: 400,
           child: Center(
-            child: WeatherImageWidget(
+            child: WeatherAnimationWidget(
                 weatherConditionName:
                     listOfWeatherForecast[0].weatherCondition.name),
           ),
