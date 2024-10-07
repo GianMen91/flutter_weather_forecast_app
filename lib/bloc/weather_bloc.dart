@@ -54,22 +54,33 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       LoadWeatherEvent event,
       Emitter<WeatherState> emit,
       ) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, errorMessage: null)); // Reset error message
 
     try {
       // Use the provided city name to load the weather forecast
       final weatherForecast = await openWeatherApiCall.loadWeatherForecast(event.city);
 
+      // Check if the weather forecast is empty
+      if (weatherForecast.isEmpty) {
+        throw Exception('No weather data available'); // Throw an exception for handling
+      }
+
+      // Emit the state with the fetched weather data
       emit(state.copyWith(
         isLoading: false,
         weatherForecast: weatherForecast,
-          currentCityName: event.city
+        currentCityName: event.city,
       ));
+
     } on Exception catch (e) {
       if (kDebugMode) {
         print(e);
       }
-      emit(state.copyWith(isLoading: false));
+      // Emit the error state with a single error message
+      emit(state.copyWith(
+        isLoading: false,
+        errorMessage: '$e. Please try again.',
+      ));
     }
   }
 

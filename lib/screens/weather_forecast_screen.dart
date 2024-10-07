@@ -39,6 +39,34 @@ class WeatherForecastScreen extends StatelessWidget {
       );
     }
 
+    if (state.errorMessage != null) {
+      // Show error screen with retry button
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              state.errorMessage!,
+              style: const TextStyle(color: Colors.white, fontSize: 18),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Retry fetching the weather data
+                if (state.currentCityName.isNotEmpty) {
+                  bloc.add(LoadWeatherEvent(state.currentCityName));
+                } else {
+                  bloc.add(ClearWeatherForecastEvent());
+                }
+              },
+              child: const Text('Retry'),
+            ),
+          ],
+        ),
+      );
+    }
+
     if (state.weatherForecast.isNotEmpty) {
       return WeatherWidget(
           listOfWeatherForecast: state.weatherForecast,

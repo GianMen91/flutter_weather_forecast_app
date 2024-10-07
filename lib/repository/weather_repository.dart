@@ -6,36 +6,37 @@ import 'package:flutter_weather_forecast_app/models/weather.dart';
 import 'package:http/http.dart' as http;
 
 class WeatherRepository {
-  Future<List<Weather>> loadWeatherForecast(
-    String cityName,
-  ) async {
-    String baseUrl = 'https://api.openweathermap.org/data/2.5/forecast';
-    String apiKey = '2490e19bf3443658945b392efebeae7c';
+  Future<List<Weather>> loadWeatherForecast(String cityName) async {
+    const String baseUrl = 'https://api.openweathermap.org/data/2.5/forecast';
+    const String apiKey = '2490e19bf3443658945b392efebeae7c';
 
-    String url =
-        '$baseUrl/?appid=$apiKey&q=$cityName&exclude=hourly,daily&units=metric';
+    final String url = '$baseUrl/?appid=$apiKey&q=$cityName&exclude=hourly,daily&units=metric';
 
     try {
       final response = await http.get(Uri.parse(url));
+
       if (response.statusCode == 200) {
         // Parse the response body into a JSON object
         final jsonData = jsonDecode(response.body);
+        final weatherList = jsonData['list'];
 
         // Check if 'list' is a valid list and contains elements
-        if (jsonData['list'] is List && (jsonData['list'] as List).isNotEmpty) {
+        if (weatherList is List && weatherList.isNotEmpty) {
           return decodeAverageForecast(jsonData);
+        } else {
+          throw Exception('No weather data available for this city.');
         }
       } else {
-        if (kDebugMode) {
-          print('Failed to load weather data: ${response.statusCode}');
-        }
+        throw Exception('Failed to load weather data: ${response.statusCode}');
       }
-    } on Exception catch (e) {
+    }on Exception catch (e) {
+      // Log the error in debug mode
       if (kDebugMode) {
         print('Error occurred: $e');
       }
+      // Rethrow the exception to be caught in the BLoC
+      rethrow;
     }
-    return [];
   }
 
   List<Weather> decodeAverageForecast(jsonData) {
