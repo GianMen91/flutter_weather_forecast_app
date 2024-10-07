@@ -31,7 +31,8 @@ class Weather {
       wind: (json['wind'] as num).toDouble(),
       pressure: (json['pressure'] as num).toDouble(),
       cloudiness: (json['cloudiness'] as num).toDouble(),
-      weatherCondition: _mapStringToWeatherCondition(json['weatherCondition'] as String),
+      weatherCondition:
+          _mapStringToWeatherCondition(json['weatherCondition'] as String),
     );
   }
 

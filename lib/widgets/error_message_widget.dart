@@ -5,7 +5,6 @@ import '../bloc/weather_bloc.dart';
 import '../bloc/weather_event.dart';
 
 class ErrorMessageWidget extends StatelessWidget {
-
   const ErrorMessageWidget(
       {super.key, required this.errorMessage, required this.currentCityName});
 
@@ -28,9 +27,11 @@ class ErrorMessageWidget extends StatelessWidget {
             onPressed: () {
               // Retry fetching the weather data
               if (currentCityName.isNotEmpty) {
-                BlocProvider.of<WeatherBloc>(context).add(LoadWeatherEvent(currentCityName));
+                BlocProvider.of<WeatherBloc>(context)
+                    .add(LoadWeatherEvent(currentCityName));
               } else {
-                BlocProvider.of<WeatherBloc>(context).add(ClearWeatherForecastEvent());
+                BlocProvider.of<WeatherBloc>(context)
+                    .add(ClearWeatherForecastEvent());
               }
             },
             child: const Text('Retry'),

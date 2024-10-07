@@ -18,7 +18,8 @@ class WeatherState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [weatherForecast, isLoading, currentCityName, errorMessage,selectedDate];
+  List<Object?> get props =>
+      [weatherForecast, isLoading, currentCityName, errorMessage, selectedDate];
 
   WeatherState copyWith({
     List<Weather>? weatherForecast,
@@ -28,11 +29,10 @@ class WeatherState extends Equatable {
     String? selectedDate,
   }) {
     return WeatherState(
-      weatherForecast: weatherForecast ?? this.weatherForecast,
-      currentCityName: currentCityName ?? this.currentCityName,
-      isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage,
-      selectedDate: selectedDate ?? this.selectedDate
-    );
+        weatherForecast: weatherForecast ?? this.weatherForecast,
+        currentCityName: currentCityName ?? this.currentCityName,
+        isLoading: isLoading ?? this.isLoading,
+        errorMessage: errorMessage,
+        selectedDate: selectedDate ?? this.selectedDate);
   }
 }

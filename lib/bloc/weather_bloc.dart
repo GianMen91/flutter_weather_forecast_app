@@ -22,25 +22,24 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   }
 
   FutureOr<void> _clearWeatherForecastEvent(
-      ClearWeatherForecastEvent event,
-      Emitter<WeatherState> emit,
-      ) {
-    emit(state.copyWith(weatherForecast: [],currentCityName: "",selectedDate: ""));
+    ClearWeatherForecastEvent event,
+    Emitter<WeatherState> emit,
+  ) {
+    emit(state
+        .copyWith(weatherForecast: [], currentCityName: "", selectedDate: ""));
   }
 
   FutureOr<void> _updateSelectedDateEvent(
-      UpdateSelectedDateEvent event,
-      Emitter<WeatherState> emit,
-      ) {
+    UpdateSelectedDateEvent event,
+    Emitter<WeatherState> emit,
+  ) {
     emit(state.copyWith(selectedDate: event.date));
   }
 
-
-
   FutureOr<void> _askForLocationPermissionEvent(
-      AskForLocationPermissionEvent event,
-      Emitter<WeatherState> emit,
-      ) async {
+    AskForLocationPermissionEvent event,
+    Emitter<WeatherState> emit,
+  ) async {
     var status = await Permission.location.request();
 
     if (status.isGranted) {
@@ -53,25 +52,25 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
           position.latitude, position.longitude);
 
       // Update the state with the city name, but don't call the API
-      emit(state.copyWith(
-        currentCityName: cityName
-      ));
+      emit(state.copyWith(currentCityName: cityName));
     }
   }
 
   FutureOr<void> _loadWeatherEvent(
-      LoadWeatherEvent event,
-      Emitter<WeatherState> emit,
-      ) async {
+    LoadWeatherEvent event,
+    Emitter<WeatherState> emit,
+  ) async {
     emit(state.copyWith(isLoading: true)); // Reset error message
 
     try {
       // Use the provided city name to load the weather forecast
-      final weatherForecast = await openWeatherApiCall.loadWeatherForecast(event.city);
+      final weatherForecast =
+          await openWeatherApiCall.loadWeatherForecast(event.city);
 
       // Check if the weather forecast is empty
       if (weatherForecast.isEmpty) {
-        throw Exception('No weather data available'); // Throw an exception for handling
+        throw Exception(
+            'No weather data available'); // Throw an exception for handling
       }
 
       // Emit the state with the fetched weather data
@@ -80,7 +79,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         weatherForecast: weatherForecast,
         currentCityName: event.city,
       ));
-
     } on Exception catch (e) {
       if (kDebugMode) {
         print(e);
@@ -93,9 +91,11 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     }
   }
 
-  Future<String> _getCityNameFromCoordinates(double latitude, double longitude) async {
+  Future<String> _getCityNameFromCoordinates(
+      double latitude, double longitude) async {
     // Use a geocoding service to get the city name from the coordinates
-    List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(latitude, longitude);
     return placemarks.first.locality ?? 'Unknown City';
   }
 }

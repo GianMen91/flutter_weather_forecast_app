@@ -14,7 +14,8 @@ class WeatherApp extends StatelessWidget {
     final openWeatherApiCall = WeatherRepository();
 
     return BlocProvider(
-      create: (context) => WeatherBloc(openWeatherApiCall: openWeatherApiCall), // Pass the OpenWeatherApiCall instance
+      create: (context) => WeatherBloc(openWeatherApiCall: openWeatherApiCall),
+      // Pass the OpenWeatherApiCall instance
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: WeatherForecastScreen(),

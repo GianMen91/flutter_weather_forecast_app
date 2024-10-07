@@ -63,7 +63,9 @@ class TodayForecastWidget extends StatelessWidget {
         SizedBox(
           width: 400,
           child: Center(
-            child: WeatherImageWidget(weatherConditionName: listOfWeatherForecast[0].weatherCondition.name),
+            child: WeatherImageWidget(
+                weatherConditionName:
+                    listOfWeatherForecast[0].weatherCondition.name),
           ),
         ),
         const SizedBox(height: 30),
@@ -81,7 +83,8 @@ class TodayForecastWidget extends StatelessWidget {
                     style: const TextStyle(color: Colors.white, fontSize: 15))),
             Container(
                 alignment: Alignment.centerLeft, // Align to left
-                child: Text('Wind: ${listOfWeatherForecast[0].wind.toInt()} Km/h',
+                child: Text(
+                    'Wind: ${listOfWeatherForecast[0].wind.toInt()} Km/h',
                     style: const TextStyle(color: Colors.white, fontSize: 15))),
           ],
         ),

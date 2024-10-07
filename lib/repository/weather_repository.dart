@@ -10,7 +10,8 @@ class WeatherRepository {
     const String baseUrl = 'https://api.openweathermap.org/data/2.5/forecast';
     const String apiKey = '2490e19bf3443658945b392efebeae7c';
 
-    final String url = '$baseUrl/?appid=$apiKey&q=$cityName&exclude=hourly,daily&units=metric';
+    final String url =
+        '$baseUrl/?appid=$apiKey&q=$cityName&exclude=hourly,daily&units=metric';
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -29,7 +30,7 @@ class WeatherRepository {
       } else {
         throw Exception('Failed to load weather data: ${response.statusCode}');
       }
-    }on Exception catch (e) {
+    } on Exception catch (e) {
       // Log the error in debug mode
       if (kDebugMode) {
         print('Error occurred: $e');
@@ -53,8 +54,7 @@ class WeatherRepository {
           wind: (item['wind']['speed'] as num).toDouble(),
           pressure: (item['main']['pressure'] as num).toDouble(),
           cloudiness: (item['clouds']['all'] as num).toDouble(),
-          weatherCondition:
-              _parseWeatherCondition(item['weather'][0]['main']));
+          weatherCondition: _parseWeatherCondition(item['weather'][0]['main']));
 
       if (!groupedForecasts.containsKey(date)) {
         groupedForecasts[date] = [];
@@ -76,9 +76,8 @@ class WeatherRepository {
       double avgHumidity =
           forecasts.map((f) => f.humidity).reduce((a, b) => a + b) /
               forecasts.length;
-      double avgWind =
-          forecasts.map((f) => f.wind).reduce((a, b) => a + b) /
-              forecasts.length;
+      double avgWind = forecasts.map((f) => f.wind).reduce((a, b) => a + b) /
+          forecasts.length;
       double avgPressure =
           forecasts.map((f) => f.pressure).reduce((a, b) => a + b) /
               forecasts.length;
@@ -118,8 +117,7 @@ class WeatherRepository {
     }
   }
 
-  WeatherCondition _determineMostFrequentCondition(
-      List<Weather> forecasts) {
+  WeatherCondition _determineMostFrequentCondition(List<Weather> forecasts) {
     var conditionCounts = SplayTreeMap<WeatherCondition, int>(
         (a, b) => b.index.compareTo(a.index));
     for (var forecast in forecasts) {

@@ -19,14 +19,16 @@ class NextDaysForecastWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // Dispatch an event to update the selected date
-        BlocProvider.of<WeatherBloc>(context).add(UpdateSelectedDateEvent(weatherForecast.date));
+        BlocProvider.of<WeatherBloc>(context)
+            .add(UpdateSelectedDateEvent(weatherForecast.date));
       },
       child: Container(
         width: 100,
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         padding: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.3), // White background with 50% opacity
+          color: Colors.white.withOpacity(0.3),
+          // White background with 50% opacity
           // Removed border to eliminate the black outline
           borderRadius: BorderRadius.circular(10),
         ),
@@ -34,15 +36,15 @@ class NextDaysForecastWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              DateFormat('EEE')
-                  .format(DateTime.parse(weatherForecast.date)),
+              DateFormat('EEE').format(DateTime.parse(weatherForecast.date)),
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Colors.white,
               ),
             ),
             const SizedBox(height: 10),
-            WeatherImageWidget(weatherConditionName: weatherForecast.weatherCondition.name),
+            WeatherImageWidget(
+                weatherConditionName: weatherForecast.weatherCondition.name),
             const SizedBox(height: 10),
             Text(
               '${weatherForecast.tempMin.toInt()}° / ${weatherForecast.tempMax.toInt()}°',

@@ -6,8 +6,8 @@ import 'package:flutter_weather_forecast_app/bloc/weather_state.dart';
 import 'package:lottie/lottie.dart';
 
 class SearchWidget extends StatelessWidget {
-
   SearchWidget({required this.bloc, super.key});
+
   final WeatherBloc bloc;
 
   final TextEditingController _controller = TextEditingController();
@@ -15,12 +15,16 @@ class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF48BEFE), // Set the background color to #48BEFE
-      body: Center( // Use Center to center the SingleChildScrollView
+      backgroundColor: const Color(0xFF48BEFE),
+      // Set the background color to #48BEFE
+      body: Center(
+        // Use Center to center the SingleChildScrollView
         child: SingleChildScrollView(
-          child: ConstrainedBox( // Use ConstrainedBox to limit the width of the child elements
+          child: ConstrainedBox(
+            // Use ConstrainedBox to limit the width of the child elements
             constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.8, // Set max width to 80% of the screen width
+              maxWidth: MediaQuery.of(context).size.width *
+                  0.8, // Set max width to 80% of the screen width
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +53,8 @@ class SearchWidget extends StatelessWidget {
                             child: TextField(
                               controller: _controller,
                               style: const TextStyle(
-                                color: Colors.white, // Set the text color to white
+                                color:
+                                    Colors.white, // Set the text color to white
                               ),
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(
@@ -57,12 +62,18 @@ class SearchWidget extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                                 enabledBorder: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(color: Colors.white), // Set the border color to white
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  borderSide: BorderSide(
+                                      color: Colors
+                                          .white), // Set the border color to white
                                 ),
                                 focusedBorder: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(color: Colors.white), // Border color when focused
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  borderSide: BorderSide(
+                                      color: Colors
+                                          .white), // Border color when focused
                                 ),
                                 hintText: "City Name",
                                 hintStyle: const TextStyle(color: Colors.white),
@@ -83,12 +94,18 @@ class SearchWidget extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.all(5.0),
                             height: 50.0,
-                            width: double.infinity, // Take the full width within the constraints
+                            width: double.infinity,
+                            // Take the full width within the constraints
                             child: ElevatedButton(
                               style: ButtonStyle(
-                                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                foregroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.blue),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.white),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
