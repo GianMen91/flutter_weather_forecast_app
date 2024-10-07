@@ -28,17 +28,18 @@ class WeatherWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.location_on, color: Colors.white),
+                    const Icon(Icons.location_on, color: Colors.white, size: 24),
                     const SizedBox(width: 10),
                     Text(
                       cityName.toUpperCase(),
                       style: const TextStyle(
-                        fontSize: 22,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -49,6 +50,7 @@ class WeatherWidget extends StatelessWidget {
                   icon: const Icon(
                     Icons.arrow_back_rounded,
                     color: Colors.white,
+                    size: 24,
                   ),
                   onPressed: () {
                     BlocProvider.of<WeatherBloc>(context)
@@ -71,7 +73,7 @@ class WeatherWidget extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -83,6 +85,7 @@ class WeatherWidget extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
           ],
         ),
       ),

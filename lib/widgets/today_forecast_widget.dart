@@ -21,7 +21,7 @@ class TodayForecastWidget extends StatelessWidget {
             Text(
               '${listOfWeatherForecast[0].temperature.toInt()}°',
               style: const TextStyle(
-                fontSize: 60,
+                fontSize: 70,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -58,15 +58,15 @@ class TodayForecastWidget extends StatelessWidget {
             )
           ],
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 30),
         // Placeholder for weather icon (can use network image or custom icon)
         SizedBox(
-          width: 200,
+          width: 400,
           child: Center(
             child: WeatherImageWidget(weatherConditionName: listOfWeatherForecast[0].weatherCondition.name),
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 30),
         Column(
           children: [
             Container(

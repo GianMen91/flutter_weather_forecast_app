@@ -5,6 +5,7 @@ import 'package:flutter_weather_forecast_app/bloc/weather_state.dart';
 import 'package:flutter_weather_forecast_app/widgets/search_widget.dart';
 
 import '../bloc/weather_event.dart';
+import '../widgets/error_message_widget.dart';
 import '../widgets/weather_widget.dart';
 
 class WeatherForecastScreen extends StatelessWidget {
@@ -25,8 +26,7 @@ class WeatherForecastScreen extends StatelessWidget {
   }
 
   Future<bool> _onWillPop(BuildContext context) async {
-    BlocProvider.of<WeatherBloc>(context)
-        .add(ClearWeatherForecastEvent());
+    BlocProvider.of<WeatherBloc>(context).add(ClearWeatherForecastEvent());
     return false;
   }
 
@@ -40,35 +40,13 @@ class WeatherForecastScreen extends StatelessWidget {
     }
 
     if (state.errorMessage != null) {
-      // Show error screen with retry button
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              state.errorMessage!,
-              style: const TextStyle(color: Colors.white, fontSize: 18),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Retry fetching the weather data
-                if (state.currentCityName.isNotEmpty) {
-                  bloc.add(LoadWeatherEvent(state.currentCityName));
-                } else {
-                  bloc.add(ClearWeatherForecastEvent());
-                }
-              },
-              child: const Text('Retry'),
-            ),
-          ],
-        ),
-      );
+      return ErrorMessageWidget(
+          errorMessage: state.errorMessage!,
+          currentCityName: state.currentCityName);
     }
 
     if (state.weatherForecast.isNotEmpty) {
-      return  RefreshIndicator(
+      return RefreshIndicator(
         onRefresh: () async {
           bloc.add(LoadWeatherEvent(state.currentCityName));
         },
