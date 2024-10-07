@@ -17,6 +17,7 @@ class NextDaysForecastWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return GestureDetector(
       onTap: () {
@@ -25,7 +26,7 @@ class NextDaysForecastWidget extends StatelessWidget {
             .add(SelectDateEvent(weatherForecast.date));
       },
       child: Container(
-        width: size.width > 600 ? 200 : 100,
+        width: size.width > 600 && isPortrait ? 200 : 100,
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         padding: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
@@ -40,7 +41,7 @@ class NextDaysForecastWidget extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Colors.white,
-                fontSize: size.width > 600 ? 23 : 15,
+                fontSize: size.width > 600 && isPortrait ? 23 : 15,
               ),
             ),
             const SizedBox(height: 10),
@@ -52,7 +53,7 @@ class NextDaysForecastWidget extends StatelessWidget {
               '${weatherForecast.tempMin.toInt()}° / ${weatherForecast.tempMax.toInt()}°',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: size.width > 600 ? 23 : 15,
+                fontSize: size.width > 600 && isPortrait ? 23 : 15,
               ),
             ),
           ],

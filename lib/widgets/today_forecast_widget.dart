@@ -15,6 +15,7 @@ class TodayForecastWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final Size size = MediaQuery.of(context).size;
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Column(
       children: [
@@ -24,7 +25,7 @@ class TodayForecastWidget extends StatelessWidget {
             Text(
               '${listOfWeatherForecast[0].temperature.toInt()}°',
               style:  TextStyle(
-                fontSize: size.width > 600 ? 85 : 70,
+                fontSize: size.width > 600 && isPortrait ? 85 : 70,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -42,7 +43,7 @@ class TodayForecastWidget extends StatelessWidget {
                     style:  TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      fontSize: size.width > 600 ? 35 : 26,
+                      fontSize: size.width > 600 && isPortrait ? 35 : 26,
                     ),
                   ),
                 ),
@@ -51,7 +52,7 @@ class TodayForecastWidget extends StatelessWidget {
                   child: Text(
                     listOfWeatherForecast[0].weatherCondition.name,
                     style:  TextStyle(
-                      fontSize: size.width > 600 ? 30 : 21,
+                      fontSize: size.width > 600 && isPortrait ? 30 : 21,
                       color: Colors.white,
                       fontWeight: FontWeight.w400,
                     ),
@@ -63,11 +64,11 @@ class TodayForecastWidget extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         SizedBox(
-          width: 400,
+          width: size.width > 600 && isPortrait ? 400 : 200,
           child: Center(
             child: WeatherAnimationWidget(
                 weatherConditionName:
-                    listOfWeatherForecast[0].weatherCondition.name),
+                listOfWeatherForecast[0].weatherCondition.name),
           ),
         ),
         const SizedBox(height: 30),
@@ -77,17 +78,17 @@ class TodayForecastWidget extends StatelessWidget {
                 alignment: Alignment.centerLeft, // Align to left
                 child: Text(
                     'Humidity: ${listOfWeatherForecast[0].humidity.toInt()} %',
-                    style:  TextStyle(color: Colors.white,  fontSize: size.width > 600 ? 25 : 15))),
+                    style:  TextStyle(color: Colors.white,  fontSize: size.width > 600 && isPortrait ? 25 : 15))),
             Container(
                 alignment: Alignment.centerLeft, // Align to left
                 child: Text(
                     'Pressure: ${listOfWeatherForecast[0].pressure.toInt()} hPa',
-                    style:  TextStyle(color: Colors.white,  fontSize: size.width > 600 ? 25 : 15))),
+                    style:  TextStyle(color: Colors.white,  fontSize: size.width > 600 && isPortrait ? 25 : 15))),
             Container(
                 alignment: Alignment.centerLeft, // Align to left
                 child: Text(
                     'Wind: ${listOfWeatherForecast[0].wind.toInt()} Km/h',
-                    style:  TextStyle(color: Colors.white,  fontSize: size.width > 600 ? 25 : 15))),
+                    style:  TextStyle(color: Colors.white,  fontSize: size.width > 600 && isPortrait ? 25 : 15))),
           ],
         ),
       ],

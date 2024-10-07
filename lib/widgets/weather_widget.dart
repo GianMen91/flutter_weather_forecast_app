@@ -23,6 +23,8 @@ class WeatherWidget extends StatelessWidget {
     final Weather selectedWeather;
 
     final Size size = MediaQuery.of(context).size;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
     if (selectedDateString.isNotEmpty) {
       selectedWeather = weatherForecasts
@@ -45,19 +47,20 @@ class WeatherWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: size.width > 600 ? 5 : 10),
+            SizedBox(height: size.width > 600 && isPortrait ? 5 : 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
                     Icon(Icons.location_on,
-                        color: Colors.white, size: size.width > 600 ? 38 : 25),
+                        color: Colors.white,
+                        size: size.width > 600 && isPortrait ? 38 : 25),
                     const SizedBox(width: 10),
                     Text(
                       cityName.toUpperCase(),
-                      style:  TextStyle(
-                        fontSize: size.width > 600 ? 38 : 25,
+                      style: TextStyle(
+                        fontSize: size.width > 600 && isPortrait ? 38 : 25,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -65,11 +68,9 @@ class WeatherWidget extends StatelessWidget {
                   ],
                 ),
                 IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_rounded,
-                    color: Colors.white,
-                      size: size.width > 600 ? 38 : 25
-                  ),
+                  icon: Icon(Icons.arrow_back_rounded,
+                      color: Colors.white,
+                      size: size.width > 600 && isPortrait ? 38 : 25),
                   onPressed: () {
                     BlocProvider.of<WeatherBloc>(context)
                         .add(ResetWeatherForecastEvent());
@@ -77,20 +78,20 @@ class WeatherWidget extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: size.width > 600 ? 30 : 20),
+            SizedBox(height: size.width > 600 && isPortrait ? 30 : 20),
             Center(
                 child: TodayForecastWidget(
                     listOfWeatherForecast: [selectedWeather])),
-            SizedBox(height: size.width > 600 ? 30 : 20),
+            SizedBox(height: size.width > 600 && isPortrait ? 30 : 20),
             // Next Days Forecast - Display horizontally in a row
             Text(
               'Weekly Weather Forecast',
               style: TextStyle(
-                  fontSize: size.width > 600 ? 38 : 18,
+                  fontSize: size.width > 600 && isPortrait ? 38 : 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             ),
-            SizedBox(height: size.width > 600 ? 60 : 40),
+            SizedBox(height: size.width > 600 && isPortrait ? 60 : 40),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
