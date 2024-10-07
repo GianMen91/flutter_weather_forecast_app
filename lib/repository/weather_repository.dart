@@ -48,6 +48,7 @@ class WeatherRepository {
   List<Weather> decodeAverageForecast(jsonData) {
     Map<String, List<Weather>> groupedForecasts = {};
 
+    // Group the weather data by date
     for (var item in jsonData['list']) {
       String date = item['dt_txt'].substring(0, 10);
       Weather forecast = Weather(
@@ -68,35 +69,27 @@ class WeatherRepository {
     }
 
     List<Weather> averagedForecasts = [];
+
     groupedForecasts.forEach((date, forecasts) {
-      double avgTemp =
-          forecasts.map((f) => f.temperature).reduce((a, b) => a + b) /
-              forecasts.length;
-      double avgTempMin =
-          forecasts.map((f) => f.tempMin).reduce((a, b) => a + b) /
-              forecasts.length;
-      double avgTempMax =
-          forecasts.map((f) => f.tempMax).reduce((a, b) => a + b) /
-              forecasts.length;
-      double avgHumidity =
-          forecasts.map((f) => f.humidity).reduce((a, b) => a + b) /
-              forecasts.length;
-      double avgWind = forecasts.map((f) => f.wind).reduce((a, b) => a + b) /
-          forecasts.length;
-      double avgPressure =
-          forecasts.map((f) => f.pressure).reduce((a, b) => a + b) /
-              forecasts.length;
-      double avgCloudiness =
-          forecasts.map((f) => f.cloudiness).reduce((a, b) => a + b) /
-              forecasts.length;
-      WeatherCondition avgWeatherCondition =
-          _determineMostFrequentCondition(forecasts);
+      // Calculate average values
+      double avgTemp = forecasts.map((f) => f.temperature).reduce((a, b) => a + b) / forecasts.length;
+      double avgHumidity = forecasts.map((f) => f.humidity).reduce((a, b) => a + b) / forecasts.length;
+      double avgWind = forecasts.map((f) => f.wind).reduce((a, b) => a + b) / forecasts.length;
+      double avgPressure = forecasts.map((f) => f.pressure).reduce((a, b) => a + b) / forecasts.length;
+      double avgCloudiness = forecasts.map((f) => f.cloudiness).reduce((a, b) => a + b) / forecasts.length;
+
+      // Find minimum and maximum temperatures for the day
+      double minTemp = forecasts.map((f) => f.tempMin).reduce((a, b) => a < b ? a : b);
+      double maxTemp = forecasts.map((f) => f.tempMax).reduce((a, b) => a > b ? a : b);
+
+      // Determine the most frequent weather condition
+      WeatherCondition avgWeatherCondition = _determineMostFrequentCondition(forecasts);
 
       averagedForecasts.add(Weather(
         date: date,
         temperature: avgTemp,
-        tempMin: avgTempMin,
-        tempMax: avgTempMax,
+        tempMin: minTemp,
+        tempMax: maxTemp,
         humidity: avgHumidity,
         wind: avgWind,
         pressure: avgPressure,
@@ -104,6 +97,7 @@ class WeatherRepository {
         weatherCondition: avgWeatherCondition,
       ));
     });
+
     return averagedForecasts;
   }
 
