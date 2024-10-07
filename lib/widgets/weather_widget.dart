@@ -67,7 +67,7 @@ class WeatherWidget extends StatelessWidget {
 
             // Next Days Forecast - Display horizontally in a row
             const Text(
-              'Next Days Forecast',
+              'Weekly Weather Forecast',
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -78,9 +78,9 @@ class WeatherWidget extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: List.generate(
-                  listOfWeatherForecast.length - 1,
+                  listOfWeatherForecast.length,
                   (index) => NextDaysForecastWidget(
-                    weatherForecast: listOfWeatherForecast[index + 1],
+                    weatherForecast: listOfWeatherForecast[index],
                   ),
                 ),
               ),
