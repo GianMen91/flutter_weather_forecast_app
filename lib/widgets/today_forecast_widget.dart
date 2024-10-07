@@ -23,8 +23,8 @@ class TodayForecastWidget extends StatelessWidget {
           children: [
             Text(
               '${listOfWeatherForecast[0].temperature.toInt()}°',
-              style: const TextStyle(
-                fontSize: 70,
+              style:  TextStyle(
+                fontSize: size.width > 600 ? 85 : 70,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -39,10 +39,10 @@ class TodayForecastWidget extends StatelessWidget {
                   child: Text(
                     DateFormat('EEEE')
                         .format(DateTime.parse(listOfWeatherForecast[0].date)),
-                    style: const TextStyle(
+                    style:  TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      fontSize: 26,
+                      fontSize: size.width > 600 ? 35 : 26,
                     ),
                   ),
                 ),
@@ -50,8 +50,8 @@ class TodayForecastWidget extends StatelessWidget {
                   alignment: Alignment.centerLeft, // Align to left
                   child: Text(
                     listOfWeatherForecast[0].weatherCondition.name,
-                    style: const TextStyle(
-                      fontSize: 21,
+                    style:  TextStyle(
+                      fontSize: size.width > 600 ? 30 : 21,
                       color: Colors.white,
                       fontWeight: FontWeight.w400,
                     ),
