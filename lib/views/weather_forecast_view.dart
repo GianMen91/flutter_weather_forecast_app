@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_forecast_app/bloc/weather_bloc.dart';
 import 'package:flutter_weather_forecast_app/bloc/weather_state.dart';
-import 'package:flutter_weather_forecast_app/widgets/search_widget.dart';
+import 'package:flutter_weather_forecast_app/widgets/weather_search_widget.dart';
 
 import '../bloc/weather_event.dart';
 import '../widgets/error_message_widget.dart';
@@ -60,7 +60,7 @@ class WeatherForecastView extends StatelessWidget {
         ),
       );
     } else {
-      return SearchWidget(bloc: weatherBloc);
+      return WeatherSearchWidget(weatherBloc: weatherBloc);
     }
   }
 }
