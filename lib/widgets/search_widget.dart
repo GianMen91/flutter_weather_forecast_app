@@ -14,6 +14,9 @@ class SearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: const Color(0xFF48BEFE),
       // Set the background color to #48BEFE
@@ -23,26 +26,25 @@ class SearchWidget extends StatelessWidget {
           child: ConstrainedBox(
             // Use ConstrainedBox to limit the width of the child elements
             constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width *
-                  0.8, // Set max width to 80% of the screen width
+              maxWidth: size.width * 0.8,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min, // Minimize the size of the column
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(30.0),
+                SizedBox(
+                  width: size.width > 600 ? 200 : 300,
                   child: Center(
                     child: Lottie.asset('assets/world.json'),
                   ),
                 ),
+                SizedBox(height: size.width > 600 ? 20 : 30),
                 BlocBuilder<WeatherBloc, WeatherState>(
                   builder: (context, state) {
                     // Populate the text field with the current city name if available
                     if (state.currentCityName.isNotEmpty) {
                       _controller.text = state.currentCityName;
                     }
-
                     return Container(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: Column(
@@ -115,7 +117,7 @@ class SearchWidget extends StatelessWidget {
                                 // Trigger the API call with the entered city name
                                 bloc.add(LoadWeatherEvent(_controller.text));
                               },
-                              child: const Text('Search'),
+                              child: const Text('Check Weather Forecast'),
                             ),
                           ),
                         ],
