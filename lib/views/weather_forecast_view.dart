@@ -54,8 +54,8 @@ class WeatherForecastView extends StatelessWidget {
           weatherBloc.add(FetchWeatherEvent(state.currentCityName));
         },
         child: WeatherWidget(
-          selectedDate: state.selectedDate,
-          listOfWeatherForecast: state.forecastData,
+          selectedDateString: state.selectedDate,
+          weatherForecasts: state.forecastData,
           cityName: state.currentCityName,
         ),
       );

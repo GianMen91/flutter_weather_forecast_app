@@ -10,13 +10,13 @@ import 'next_days_forecasts_widget.dart';
 class WeatherWidget extends StatelessWidget {
   const WeatherWidget(
       {super.key,
-      required this.listOfWeatherForecast,
+      required this.weatherForecasts,
       required this.cityName,
-      required this.selectedDate});
+      required this.selectedDateString});
 
-  final List<Weather> listOfWeatherForecast;
+  final List<Weather> weatherForecasts;
   final String cityName;
-  final String selectedDate;
+  final String selectedDateString;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,11 @@ class WeatherWidget extends StatelessWidget {
 
     final Size size = MediaQuery.of(context).size;
 
-    if (selectedDate.isNotEmpty) {
-      selectedWeather = listOfWeatherForecast
-          .firstWhere((weather) => weather.date == selectedDate);
+    if (selectedDateString.isNotEmpty) {
+      selectedWeather = weatherForecasts
+          .firstWhere((weather) => weather.date == selectedDateString);
     } else {
-      selectedWeather = listOfWeatherForecast.firstWhere((weather) =>
+      selectedWeather = weatherForecasts.firstWhere((weather) =>
           weather.date == DateFormat('yyyy-MM-dd').format(DateTime.now()));
     }
 
@@ -95,9 +95,9 @@ class WeatherWidget extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: List.generate(
-                  listOfWeatherForecast.length,
+                  weatherForecasts.length,
                   (index) => NextDaysForecastWidget(
-                    weatherForecast: listOfWeatherForecast[index],
+                    weatherForecast: weatherForecasts[index],
                   ),
                 ),
               ),
