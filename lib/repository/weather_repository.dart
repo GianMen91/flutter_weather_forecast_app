@@ -6,14 +6,9 @@ import 'package:flutter_weather_forecast_app/models/weather.dart';
 import 'package:http/http.dart' as http;
 
 class WeatherRepository {
-  Future<List<Weather>> loadWeatherForecast(String cityName) async {
+  Future<List<Weather>> fetchWeatherForecast(String cityName) async {
     const String baseUrl = 'https://api.openweathermap.org/data/2.5/forecast';
     const String apiKey = '2490e19bf3443658945b392efebeae7c';
-
-    /* The OpenWeatherMap API's forecast endpoint (/data/2.5/forecast)
-     provides weather data for the next 5 days, with forecasts
-     available every 3 hours. Each forecast entry contains weather data
-     (e.g., temperature, humidity, etc.) for a specific time within the day.*/
 
     final String url =
         '$baseUrl/?appid=$apiKey&q=$cityName&exclude=hourly,daily&units=metric';
@@ -22,13 +17,11 @@ class WeatherRepository {
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
-        // Parse the response body into a JSON object
         final jsonData = jsonDecode(response.body);
         final weatherList = jsonData['list'];
 
-        // Check if 'list' is a valid list and contains elements
         if (weatherList is List && weatherList.isNotEmpty) {
-          return decodeAverageForecast(jsonData);
+          return _processWeatherData(jsonData);
         } else {
           throw Exception('No weather data available for this city.');
         }
@@ -36,54 +29,55 @@ class WeatherRepository {
         throw Exception('Failed to load weather data: ${response.statusCode}');
       }
     } on Exception catch (e) {
-      // Log the error in debug mode
       if (kDebugMode) {
         print('Error occurred: $e');
       }
-      // Rethrow the exception to be caught in the BLoC
       rethrow;
     }
   }
 
-  List<Weather> decodeAverageForecast(jsonData) {
-    Map<String, List<Weather>> groupedForecasts = {};
+  List<Weather> _processWeatherData(dynamic jsonData) {
+    Map<String, List<Map<String, dynamic>>> groupedData =
+        _groupDataByDate(jsonData);
 
-    // Group the weather data by date
+    return _convertToWeatherObjects(groupedData);
+  }
+
+  Map<String, List<Map<String, dynamic>>> _groupDataByDate(dynamic jsonData) {
+    Map<String, List<Map<String, dynamic>>> groupedForecasts = {};
+
     for (var item in jsonData['list']) {
       String date = item['dt_txt'].substring(0, 10);
-      Weather forecast = Weather(
-          date: date,
-          temperature: (item['main']['temp'] as num).toDouble(),
-          tempMin: (item['main']['temp_min'] as num).toDouble(),
-          tempMax: (item['main']['temp_max'] as num).toDouble(),
-          humidity: (item['main']['humidity'] as num).toDouble(),
-          wind: (item['wind']['speed'] as num).toDouble(),
-          pressure: (item['main']['pressure'] as num).toDouble(),
-          cloudiness: (item['clouds']['all'] as num).toDouble(),
-          weatherCondition: _parseWeatherCondition(item['weather'][0]['main']));
 
-      if (!groupedForecasts.containsKey(date)) {
-        groupedForecasts[date] = [];
-      }
-      groupedForecasts[date]!.add(forecast);
+      groupedForecasts.putIfAbsent(date, () => []).add(item);
     }
 
+    return groupedForecasts;
+  }
+
+  List<Weather> _convertToWeatherObjects(
+      Map<String, List<Map<String, dynamic>>> groupedData) {
     List<Weather> averagedForecasts = [];
 
-    groupedForecasts.forEach((date, forecasts) {
-      // Calculate average values
-      double avgTemp = forecasts.map((f) => f.temperature).reduce((a, b) => a + b) / forecasts.length;
-      double avgHumidity = forecasts.map((f) => f.humidity).reduce((a, b) => a + b) / forecasts.length;
-      double avgWind = forecasts.map((f) => f.wind).reduce((a, b) => a + b) / forecasts.length;
-      double avgPressure = forecasts.map((f) => f.pressure).reduce((a, b) => a + b) / forecasts.length;
-      double avgCloudiness = forecasts.map((f) => f.cloudiness).reduce((a, b) => a + b) / forecasts.length;
+    groupedData.forEach((date, forecasts) {
+      double avgTemp = _calculateAverage(forecasts, 'main', 'temp');
+      double avgHumidity = _calculateAverage(forecasts, 'main', 'humidity');
+      double avgWind = _calculateAverage(forecasts, 'wind', 'speed');
+      double avgPressure = _calculateAverage(forecasts, 'main', 'pressure');
+      double avgCloudiness = _calculateAverage(forecasts, 'clouds', 'all');
 
-      // Find minimum and maximum temperatures for the day
-      double minTemp = forecasts.map((f) => f.tempMin).reduce((a, b) => a < b ? a : b);
-      double maxTemp = forecasts.map((f) => f.tempMax).reduce((a, b) => a > b ? a : b);
+      double minTemp = forecasts
+          .map((f) => f['main']['temp_min'] as num)
+          .reduce((a, b) => a < b ? a : b)
+          .toDouble();
 
-      // Determine the most frequent weather condition
-      WeatherCondition avgWeatherCondition = _determineMostFrequentCondition(forecasts);
+      double maxTemp = forecasts
+          .map((f) => f['main']['temp_max'] as num)
+          .reduce((a, b) => a > b ? a : b)
+          .toDouble();
+
+      WeatherCondition avgWeatherCondition = findMostFrequentCondition(
+          forecasts.map((f) => f['weather'][0]['main'] as String).toList());
 
       averagedForecasts.add(Weather(
         date: date,
@@ -101,6 +95,49 @@ class WeatherRepository {
     return averagedForecasts;
   }
 
+  double _calculateAverage(
+      List<Map<String, dynamic>> forecasts, String category, String key) {
+    num total =
+        forecasts.map((f) => f[category][key] as num).reduce((a, b) => a + b);
+    return total / forecasts.length;
+  }
+
+  WeatherCondition findMostFrequentCondition(List<String> conditions) {
+    // Create a map to count occurrences of each WeatherCondition
+    Map<WeatherCondition, int> conditionCounts = {};
+
+    // Populate the conditionCounts map with counts of each condition
+    for (var condition in conditions) {
+      WeatherCondition parsedCondition = _parseWeatherCondition(condition);
+
+      // Check if parsedCondition already exists in conditionCounts
+      if (conditionCounts.containsKey(parsedCondition)) {
+        // Increment the count for parsedCondition
+        conditionCounts[parsedCondition] = conditionCounts[parsedCondition]! + 1;
+      } else {
+        // Initialize the count for parsedCondition
+        conditionCounts[parsedCondition] = 1;
+      }
+    }
+
+    // Convert the map entries to a list and sort it based on count and condition index
+    List<MapEntry<WeatherCondition, int>> sortedConditionEntries =
+    conditionCounts.entries.toList()
+      ..sort((a, b) {
+        // Sort by count descending, then by condition index ascending
+        int compareCount = b.value.compareTo(a.value);
+        if (compareCount == 0) {
+          return a.key.index.compareTo(b.key.index);
+        }
+        return compareCount;
+      });
+
+    // Return the WeatherCondition with the highest count (first in the sorted list)
+    return sortedConditionEntries.first.key;
+  }
+
+
+
   WeatherCondition _parseWeatherCondition(String condition) {
     switch (condition.toLowerCase()) {
       case 'clear':
@@ -114,24 +151,5 @@ class WeatherRepository {
       default:
         return WeatherCondition.partiallyCloudy;
     }
-  }
-
-  WeatherCondition _determineMostFrequentCondition(List<Weather> forecasts) {
-    var conditionCounts = SplayTreeMap<WeatherCondition, int>(
-        (a, b) => b.index.compareTo(a.index));
-    for (var forecast in forecasts) {
-      conditionCounts.update(forecast.weatherCondition, (value) => value + 1,
-          ifAbsent: () => 1);
-    }
-
-    var sortedCondition = conditionCounts.entries.toList()
-      ..sort((a, b) {
-        int compareCount = b.value.compareTo((a.value));
-        if (compareCount == 0) {
-          return a.key.index.compareTo(b.key.index);
-        }
-        return compareCount;
-      });
-    return sortedCondition.first.key;
   }
 }

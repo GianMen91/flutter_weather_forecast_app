@@ -65,7 +65,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     try {
       // Use the provided city name to load the weather forecast
       final weatherForecast =
-          await openWeatherApiCall.loadWeatherForecast(event.city);
+          await openWeatherApiCall.fetchWeatherForecast(event.city);
 
       // Check if the weather forecast is empty
       if (weatherForecast.isEmpty) {
