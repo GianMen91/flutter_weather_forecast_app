@@ -10,6 +10,11 @@ class WeatherRepository {
     const String baseUrl = 'https://api.openweathermap.org/data/2.5/forecast';
     const String apiKey = '2490e19bf3443658945b392efebeae7c';
 
+    /* The OpenWeatherMap API's forecast endpoint (/data/2.5/forecast)
+     provides weather data for the next 5 days, with forecasts
+     available every 3 hours. Each forecast entry contains weather data
+     (e.g., temperature, humidity, etc.) for a specific time within the day.*/
+
     final String url =
         '$baseUrl/?appid=$apiKey&q=$cityName&exclude=hourly,daily&units=metric';
 
