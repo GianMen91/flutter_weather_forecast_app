@@ -1,5 +1,7 @@
 # Weather Forecast App using BLoC
 
+[![CI Status](https://github.com/GianMen91/flutter_weather_forecast_app/actions/workflows/ci.yml/badge.svg)](https://github.com/GianMen91/flutter_weather_forecast_app/actions/workflows/ci.yml)
+
 ## Overview
 The Weather Forecast App is a modern, responsive Flutter application that provides real-time weather information for any city. Built using the BLoC pattern for effective state management, the app ensures a clean separation of business logic from the UI, leading to a robust and maintainable codebase.
 
